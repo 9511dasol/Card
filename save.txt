@@ -1,0 +1,33 @@
+fetch('/findcard').then((res) => res.json()).then((data) => {// 수정 필요
+                $('#card-list').empty()
+                let rows = data['result']
+                rows.forEach((a) => {
+
+                    if (company == a['Company']) {
+                        if (pdc == a['PDC']) {
+                            let company = a['Company']
+                            let cardname = a['Card_Name']
+                            let pdc = a['PDC']
+                            let benefit1 = a['Benefit1']
+                            let benefit2 = a['Benefit2']
+                            let benefit3 = a['Benefit3']
+                            let benefit4 = a['Benefit4']
+                            let innate_number = a['Innate_number']
+                            let use_ex = a['Use_Ex']
+                            let rec = a['REC']
+                            let Notice = a['Notice']
+                            /*html_text = `<div class="card">
+                                            <div class="card-body">
+                                                <blockquote class="blockquote mb-0">
+                                                    <p>${comment}</p>
+                                                    <footer class="blockquote-footer">${name}</footer>
+                                                </blockquote>
+                                            </div>
+                                        </div>`
+                            $('#comment-list').append(html_text)*/
+
+                        }
+
+                    }
+                });
+            })

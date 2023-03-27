@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>카드 등록 - 카드 목록</title>
+
+    <meta property="og:title" content="카드 등록" />
+    <meta property="og:description" content="카드 등록 - 개발자" />
+    <meta property="og:image"
+        content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            font-family: "Noto Serif KR", serif;
+        }
+
+        .mypic {
+            width: 100%;
+            height: 300px;
+
+            background-image: linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)),
+                url("https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800");
+            background-position: center 30%;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 20px auto;
+
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 20px;
+        }
+
+        .mypost>button {
+            margin-top: 15px;
+        }
+
+        .mycards {
+            width: 95%;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .mycards>.card {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            set_temp()
+            show_cards()
+        });
+        function set_temp() { // 온도 표기
+            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
+                let temp = data['temp'] // 온도 받아오기
+                //$('#temp').empty()
+                //temp_html = `${temp}`
+                //$('#temp').append(temp_html)
+                $('#temp').text(temp) // 온도 Setting
+            });
+        }
+        function del_card() {
+            let innate_number = $('#innate_number').val() //카드 고유 번호 저장
+            let formData = new FormData();
+            formData.append("innate_number", innate_number);
+            fetch('/delcard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+            });
+
+        }
+        function find_card() { // 수정 필요
+            let pdc = $('#PDC').val() // point / discount 저장
+            let company = $('#company').val() // 카드 회사
+            let Benefit = $('#Benefit').val()
+            
+            let formData = new FormData();
+            formData.append("Benefit", Benefit);
+            formData.append("company", company);
+            formData.append("pdc", pdc);
+            
+
+
+            fetch('/findcard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+
+            });
+
+            fetch('/findcard').then((res) => res.json()).then((data) => {// 수정 필요
+                $('#card-list').empty()
+                let rows = data['result']
+                rows.forEach((a) => {
+
+                    if (company == a['Company']) {
+                        if (pdc == a['PDC']) {
+                            let company = a['Company']
+                            let cardname = a['Card_Name']
+                            let pdc = a['PDC']
+                            let benefit1 = a['Benefit1']
+                            let benefit2 = a['Benefit2']
+                            let benefit3 = a['Benefit3']
+                            let benefit4 = a['Benefit4']
+                            let innate_number = a['Innate_number']
+                            let use_ex = a['Use_Ex']
+                            let rec = a['REC']
+                            let Notice = a['Notice']
+                            /*html_text = `<div class="card">
+                                            <div class="card-body">
+                                                <blockquote class="blockquote mb-0">
+                                                    <p>${comment}</p>
+                                                    <footer class="blockquote-footer">${name}</footer>
+                                                </blockquote>
+                                            </div>
+                                        </div>`
+                            $('#comment-list').append(html_text)*/
+
+                        }
+
+                    }
+                });
+            })
+        }
+        function save_card() {
+            let company = $('#company').val()
+            let cardname = $('#cardname').val()
+            let pdc = $('#PDC').val()
+            let benefit1 = $('#benefit1').val()
+            let benefit2 = $('#benefit2').val()
+            let benefit3 = $('#benefit3').val()
+            let benefit4 = $('#benefit4').val()
+            let innate_number = $('#innate_number').val()
+            let use_ex = $('#use_ex').val()
+            let REC = $('#REC').val()
+            let Notice = $('#Notice').val()
+
+            let formData = new FormData();
+            formData.append("company", company);
+            formData.append("cardname", cardname);
+            formData.append("pdc", pdc);
+            formData.append("benefit1", benefit1);
+            formData.append("benefit2", benefit2);
+            formData.append("benefit3", benefit3);
+            formData.append("benefit4", benefit4);
+            formData.append("use_ex", use_ex);
+            formData.append("innate_number", innate_number);
+            formData.append("REC", REC)
+            formData.append("Notice", Notice)
+
+            fetch('/Savecard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+
+            });
+        }
+        function show_cards() {
+            fetch('/All_Card').then((res) => res.json()).then((data) => {
+                $('#card-list').empty()
+                let rows = data['result']
+                rows.forEach((a) => {
+
+                    let company = a['Company']
+                    let cardname = a['Card_Name']
+                    let pdc = a['PDC']
+                    let benefit1 = a['Benefit1']
+                    let benefit2 = a['Benefit2']
+                    let benefit3 = a['Benefit3']
+                    let benefit4 = a['Benefit4']
+                    let innate_number = a['Innate_number']
+                    let use_ex = a['Use_Ex']
+                    let rec = a['REC']
+                    let Notice = a['Notice']
+                    /*html_text = `<div class="card">
+                                    <div class="card-body">
+                                        <blockquote class="blockquote mb-0">
+                                            <p>${comment}</p>
+                                            <footer class="blockquote-footer">${name}</footer>
+                                        </blockquote>
+                                    </div>
+                                </div>`
+                    $('#comment-list').append(html_text)*/
+                });
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="mypic">
+        <h1>카드 관리</h1>
+        <p>현재기온: <span id="temp">--</span>도</p>
+    </div>
+    <div class="mypost">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">개발자 추천</label>
+            <select class="form-select" id="REC">
+                <option selected>-- 선택하기 --</option>
+                <option value="1">O</option>
+                <option value="2">X</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect02">카드사</label>
+            <select class="form-select" id="SELECT">
+                <option selected>-- 선택하기 --</option>
+                <option value="1">삼성</option>
+                <option value="2">신한</option>
+                <option value="3">현대</option>
+                <option value="4">우리</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">PDC</label>
+            <select class="form-select" id="PDC">
+                <option selected>-- 선택하기 --</option>
+                <option value="1">Point</option>
+                <option value="2">Discount</option>
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="card_name" placeholder="url" />
+            <label for="floatingInput">카드 이름</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="benefit1" placeholder="url" />
+            <label for="floatingInput">혜택1</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="benefit2" placeholder="url" />
+            <label for="floatingInput">혜택2</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="benefit3" placeholder="url" />
+            <label for="floatingInput">혜택3</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="benefit4" placeholder="url" />
+            <label for="floatingInput">혜택4</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="innate_number" placeholder="url" />
+            <label for="floatingInput">카드 고유 번호</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave Notices here" id="Notice"
+                style="height: 100px"></textarea>
+            <label for="floatingTextarea2">주의사항</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave EXs here" id="use_ex" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">사용 예시</label>
+        </div>
+        <button onclick="save_card()" type="button" class="btn btn-dark">
+            카드 등록
+        </button>
+        <button onclick="find_card()" type="button" class="btn btn-dark">
+            카드 조회
+        </button>
+        <button onclick="del_card()" type="button" class="btn btn-dark">
+            카드 삭제
+        </button>
+    </div>
+    <div class="mycards" id="card-list">
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>새로운 앨범 너무 멋져요!</p>
+                    <footer class="blockquote-footer">호빵맨</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
