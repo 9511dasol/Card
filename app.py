@@ -8,11 +8,11 @@ find_cards = list(db.card.find({},{'_id':False}))
 
 @app.route('/')
 def home():
-   return render_template('index.html')
+   return render_template('main.html')
 
-@app.route('/')
+@app.route('/findcard')
 def Main_home():
-    return render_template('main_homepage.html')
+    return render_template('find_card.html')
 
 @app.route('/user')
 def user_home():
