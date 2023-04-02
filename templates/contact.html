@@ -13,10 +13,10 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>Main</title>
+    <title>Contact</title>
 
-    <meta property="og:title" content="Card" />
-    <meta property="og:description" content="Card" />
+    <meta property="og:title" content="Contact" />
+    <meta property="og:description" content="Contact" />
     <meta property="og:image"
         content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
 
@@ -85,81 +85,33 @@
             color: red;
         }
 
-        .contact_section {
-            width: 100%;
-            float: left;
+        .mypost {
+            width: 150%;
+            max-width: 1000px;
+            margin: 20px auto 20px auto;
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 50px;
         }
 
-        .contact_taital {
-            width: 100%;
-            float: left;
-            color: #ffffff;
-            text-align: center;
-            font-weight: bold;
-            font-size: 50px;
+        .mypost>button {
+            margin-top: 15px;
         }
 
-        .contact_section_2 {
-            width: 100%;
-            text-align: center;
-            height: auto;
-            background-size: 100%;
-            padding: 40px 0px 60px 0px;
+        .mycards {
+            width: 95%;
+            max-width: 500px;
+            margin: auto;
         }
 
-        .mail_section_1 {
-            width: 80%;
-            margin: 0 auto;
-            text-align: center;
+        .mycards>.card {
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
-
-        .mail_text {
-            width: 100%;
-            float: left;
-            font-size: 16px;
-            color: #363636;
-            border: 0px;
-            border: 2px solid black !important;
-            background-color: #ffffff !important;
-            padding: 10px 15px 10px 15px;
-            margin-top: 20px;
-        }
-
-        .massage-bt {
-            color: #363636;
-            width: 100%;
-            height: 110px;
-            font-size: 18px;
-            border: 2px solid black !important;
-            background-color: #ffffff !important;
-            padding: 40px 15px 10px 15px;
-            margin-top: 20px;
-        }
-
-        .send_bt {
-            width: 200px;
-            margin: 0 auto;
-            margin-top: 30px;
-        }
-
-        .send_bt a {
-            width: 100%;
-            float: left;
-            background-color: black;
-            color: #fefeff;
-            text-align: center;
-            padding: 12px 0px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .send_bt a:hover {
-            background-color: #ff9800;
-            color: #fefeff;
-        }
-
-        .padding_right0 {
-            padding-right: 0px;
+        .rtn_qna>a{
+            text-align: left;
+            text-decoration: none;
+            color: black;
+            font-size: 30px;
         }
     </style>
     <script>
@@ -177,44 +129,68 @@
             });
         }
 
+        function clear() { //초기화 하기
+            $('#comment').empty()
+            $('#comment').empty()
+        }
+        function send() { // 메일 보내기
+            let comment = $('#comment').val()
+            let name = $('#name').val()
+            let Email = $('#email').val()
+
+            let formData = new FormData();
+            formData.append("comment", comment);
+            formData.append("name", name);
+            formData.append("email", email);
+
+            fetch('/contact', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+
+            });
+        }
     </script>
 </head>
 
 <body>
-    <!-- div>a[href="#"]{bnx} -->
     <div class="mypic">
-        <div><a href="#">Title</a></div>
+        <div><a href="main.html">Title</a></div>
         <section>
             |
-            <nav><a href="#">인기카드</a></nav>
+            <nav><a href="famous_card.html">인기카드</a></nav>
             |
-            <nav><a href="#">카드 찾기</a></nav>
+            <nav><a href="find_card.html">카드 찾기</a></nav>
             |
-            <nav><a href="#">개발자 카드 추천</a></nav>
+            <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
             |
-            <nav><a href="#">문의하기</a></nav>
+            <nav><a href="qna.html">QnA</a></nav>
             |
         </section>
     </div>
-    <div class="contact_section">
-        <div class="container">
-            <div class="contact_section_2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="contact_taital">Get In Touch</h1>
-                        <form action="">
-                            <div class="mail_section_1">
-                                <input type="text" class="mail_text" placeholder="Name" name="Name">
-                                <input type="text" class="mail_text" placeholder="Phone Number" name="Phone Number">
-                                <input type="text" class="mail_text" placeholder="Email" name="Email">
-                                <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment"
-                                    name="Massage"></textarea>
-                                <div class="send_bt"><a href="#">SEND</a></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+    <div class="mypost" id="post-box">
+        <div class="form-floating mb-3">
+            <input id="url" type="email" class="form-control" placeholder="name@example.com">
+            <label>E-Mail</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="url" />
+            <label for="floatingInput">이름</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+                style="height: 200px"></textarea>
+            <label for="floatingTextarea2">문의내용</label>
+        </div>
+        <div class="mybtns">
+            <button onclick="send()" type="button" class="btn btn-dark">보내기</button>
+            <button onclick="clear()" type="button" class="btn btn-outline-dark">초기화</button>
+        </div>
+    </div>
+    <div class = "rtn_qna">
+        <a href="qna.html">QnA로 돌아가기</a>
+    </div>
+    
 </body>
 
 </html>

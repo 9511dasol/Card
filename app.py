@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
+import smtplib
+from email.mime.text import EmailMessage
 client = MongoClient('mongodb+srv://sparta:test@cluster0.sjc7unz.mongodb.net/?retryWrites=true&w=majority')
 
 db = client.dbsparta
@@ -80,6 +82,26 @@ def find_post():
 
     find_cards = list(db.card.find(doc,{'_id':False}))
     return jsonify({'msg': 'finding~'})
+
+@app.route("/contact", methods=["POST"])
+def find_post():
+    mail = request.form['pdc']
+    name = request.form['company']
+    comment = request.form['Benefit']
+    
+    smtp = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login('@gmail.com','추후')
+
+    message = EmailMessage()
+    message["Subject"] = "이메일 제목"
+    message.set_content(f"{comment}\n 이름:{name}\n 이메일:{mail}")
+    message["From"] = '@gmail.com'  #보내는 사람의 이메일 계정
+    message["To"] = mail
+
+    smtp.send_message(message)
+    return jsonify({'msg': '전송됐습니다'})
 
 ###############################---Get----#####################################################
 

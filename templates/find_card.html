@@ -142,17 +142,77 @@
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
+
 
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
+        function find_card() { // 수정 필요
+            let pdc = $('#PDC').val() // point / discount 저장
+            let company = $('#company').val() // 카드 회사
+            let Benefit = $('#Benefit').val()
+
+            let formData = new FormData();
+            formData.append("Benefit", Benefit);
+            formData.append("company", company);
+            formData.append("pdc", pdc);
+
+
+
+            fetch('/findcard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+
             });
+
+            fetch('/findcard').then((res) => res.json()).then((data) => {// 수정 필요
+                $('#card-list').empty()
+                let rows = data['result']
+                rows.forEach((a) => {
+                    /*html_text = `<div class="col">
+                <div class="card h-100">
+                    <img src="${image}"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">a${}</h5>
+                        <p>${}</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">${}</p>
+                        <p>${}</p>
+                        <p>${}</p>
+                        <strong><a href="${}">${}</a></strong>
+                        <div class="read_bt"><a href="${}">카드 만들기</a></div>
+                    </div>                
+                </div>
+            </div>`*/
+                    $('#mycards').append(html_text)
+                    /*if (company == a['Company']) {
+                        if (pdc == a['PDC']) {
+                            let company = a['Company']
+                            let cardname = a['Card_Name']
+                            let pdc = a['PDC']
+                            let benefit1 = a['Benefit1']
+                            let benefit2 = a['Benefit2']
+                            let benefit3 = a['Benefit3']
+                            let benefit4 = a['Benefit4']
+                            let innate_number = a['Innate_number']
+                            let use_ex = a['Use_Ex']
+                            let rec = a['REC']
+                            let Notice = a['Notice']
+                            html_text = `<div class="card">
+                                            <div class="card-body">
+                                                <blockquote class="blockquote mb-0">
+                                                    <p>${comment}</p>
+                                                    <footer class="blockquote-footer">${name}</footer>
+                                                </blockquote>
+                                            </div>
+                                        </div>`
+                            $('#comment-list').append(html_text)
+
+                        }
+
+                    }*/
+                });
+            })
         }
 
     </script>
@@ -161,14 +221,16 @@
 <body>
     <!-- div>a[href="#"]{bnx} -->
     <div class="mypic">
-        <div><a href="#">Title</a></div>
+        <div><a href="main.html">Title</a></div>
         <section>
             |
-            <nav><a href="#">인기카드</a></nav>
+            <nav><a href="famous_card.html">인기카드</a></nav>
             |
-            <nav><a href="#"><strong>카드 찾기</strong></a></nav>
+            <nav><a href="find_card.html"><strong>카드 찾기</strong></a></nav>
             |
-            <nav><a href="#">개발자 카드 추천</a></nav>
+            <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
+            |
+            <nav><a href="qna.html">QnA</a></nav>
             |
         </section>
     </div>
@@ -221,7 +283,6 @@
                         <strong><a href="#">카드 자세히 보기</a></strong>
                         <div class="read_bt"><a href="#">카드 만들기</a></div>
                     </div>
-                    
                 </div>
             </div>
             <div class="col">
@@ -252,7 +313,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </body>
