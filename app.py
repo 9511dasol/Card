@@ -2,11 +2,16 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 import smtplib
 from email.mime.text import EmailMessage
+import requests
+from bs4 import BeautifulSoup
+
 client = MongoClient('mongodb+srv://sparta:test@cluster0.sjc7unz.mongodb.net/?retryWrites=true&w=majority')
 
 db = client.dbsparta
 app = Flask(__name__)
 find_cards = list(db.card.find({},{'_id':False}))
+card_name = ''
+benefits = ''
 
 @app.route('/')
 def home():
@@ -84,7 +89,7 @@ def find_post():
     return jsonify({'msg': 'finding~'})
 
 @app.route("/contact", methods=["POST"])
-def find_post():
+def contact():
     mail = request.form['pdc']
     name = request.form['company']
     comment = request.form['Benefit']
@@ -103,6 +108,7 @@ def find_post():
     smtp.send_message(message)
     return jsonify({'msg': '전송됐습니다'})
 
+
 ###############################---Get----#####################################################
 
 @app.route("/findcard", methods=["GET"])
@@ -117,3 +123,46 @@ def guestbook_get():
 
 if __name__ == '__main__':
    app.run('0.0.0.0', port=5000, debug=True)
+
+############## 개방중인 코드##############
+
+@app.route("/card_info", methods=["POST"])
+def card_info():
+    card_comp = request.form['company']
+    URL = request.form['url'] # 카드 상세 
+    
+    headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get(URL, headers=headers)
+    data.encoding = 'utf-8'
+    soup = BeautifulSoup(data.text, 'html.parser')
+
+    if(URL == None):
+        return jsonify({'msg': 'URL을 입력하여 주십시오'})
+       
+    if(card_comp =="신한"):    
+        so = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.card_name_wrap > h1')
+        card_name = so.text # 카드이름
+
+        lis = soup.select('#section08_0 > div > div > div > ul > li') 
+        for li in lis: # 혜택정보 나열
+            a = li.select_one('a > div > strong')
+            benefits += f'{a.text}\n'         
+        
+    elif(card_comp =="삼성"):
+        CN = soup.select_one('')
+        card_name = so.text # 카드이름
+
+        lis = soup.select('')
+        for li in lis: 
+            a = li.select_one('')
+            benefits += f'{a.text}\n'
+    elif(card_comp =="현대"):
+        CN = soup.select_one('')
+        card_name = so.text # 카드이름
+
+        lis = soup.select('')
+        for li in lis: 
+            a = li.select_one('')
+            benefits += f'{a.text}\n'
+    else:
+        return jsonify({'msg': '다시 입력하여 주십시오'})
