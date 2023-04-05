@@ -19,18 +19,43 @@ def benefit():
     return k    
 
 
-a = benefit()    
-k = ''
-for i in a:
-    k+=f'{i}\n'
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#m~x
+#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2
+#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2
+# zero
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#kia
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#naver
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#nexon
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#대한 한공
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#무신사
+#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2
+#스마일페이
+#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2
+#기타
 
-cn =card_name()
+# a = benefit()    
+# k = ''
+# for i in a:
+#     k+=f'{i}\n'
 
-doc = {
-    'benefit' : k,
-}
-print(doc['benefit'])
-ls = soup.select('#cardCompareAfter > div.card_detail.gap80_40 > div.right_wrap > ul > li')
+# cn =card_name()
+
+# doc = {
+#     'benefit' : k,
+# }
+# print(doc['benefit'])
+# ls = soup.select('#cardCompareAfter > div.card_detail.gap80_40 > div.right_wrap > ul > li')
+
 #for l in ls:  
     #a = l.select_one()
     #print(a.text) # 간편 혜택 아직 미구현
@@ -38,6 +63,8 @@ ls = soup.select('#cardCompareAfter > div.card_detail.gap80_40 > div.right_wrap 
 
 #section08_0 > div > div > div > ul > li:nth-child(3) > a > div > strong
 #cardCompareAfter > div.card_detail.gap80_40 > div.right_wrap > ul > li:nth-child(1)
+
+
 # from selenium import webdriver
 
 # search_url = "https://www.shinhancard.com/pconts/html/card/credit/MOBFM281/MOBFM281R11.html?crustMenuId=ms581"
