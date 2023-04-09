@@ -40,7 +40,7 @@ sos = soup.select('#wrapper > div.modals-container > div > div.vfm__container.vf
 dd = soup.select('#acc0 > div > div > table > tbody > tr')
 for d in dd:
     a = d.select_one('td.wgt_md.color_darkgray')
-    print(d.text)
+    print(d.text + '\n')
 
 #acc0 > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1) > span > img   // 국내카드
 #acc0 > div > div > table > tbody > tr:nth-child(1) > td.wgt_md.color_darkgray   // 국내카드 총 연회비

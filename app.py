@@ -112,7 +112,7 @@ def contact():
 def card_info():
     
     card_comp = request.form['company']
-    bene = request.form('benefit')
+    bene = request.form['benefit']
     URL = request.form['url'] # 카드 상세 
 
     if(URL == None):
@@ -128,7 +128,6 @@ def card_info():
         so = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.card_name_wrap > h1')
         card_name = so.text # 카드이름
         
-        Year = soup.select('') #연회비
 
         lis = soup.select('#section08_0 > div > div > div > ul > li') 
         for li in lis: # 혜택정보 나열
@@ -139,12 +138,10 @@ def card_info():
         CN = soup.select_one('#contents > div > section:nth-child(1) > div.lists-card > div.card-tx > p')
         card_name = so.text # 카드이름
 
-        Year = soup.select('') #연회비
 
         k = ''
         lis = soup.select('#contents > div > section:nth-child(1) > article > section > div > section > section > ul')
         for li in lis: 
-            lis = soup.select('#contents > div > section:nth-child(1) > article > section > div > section > section > ul')
             k+=f'{li.text}\n' 
 
     elif(card_comp =="현대" and bene):
@@ -152,7 +149,6 @@ def card_info():
             CN = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
             card_name = so.text # 카드이름
 
-            Year = soup.select('') #연회비
 
             k = ''
             lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
@@ -162,7 +158,6 @@ def card_info():
             CN = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2')
             card_name = so.text # 카드이름
 
-            Year = soup.select('') #연회비
 
             k = ''
             lis = soup.select('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > ul > li')
@@ -172,7 +167,6 @@ def card_info():
             CN = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
             card_name = so.text # 카드이름
 
-            Year = soup.select('') #연회비
 
             k = ''             
             lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
@@ -182,7 +176,6 @@ def card_info():
             CN = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2')
             card_name = so.text # 카드이름
 
-            Year = soup.select('') #연회비
 
             k = ''             
             lis = soup.select('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > ul > li')
