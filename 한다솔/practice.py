@@ -10,14 +10,25 @@ soup = BeautifulSoup(data.text, 'html.parser')
 #https://www.hyundaicard.com/img/com/card_big_h/card_MZROE2_h.png
 
 #section08_0 > div > div > div > ul > li:nth-child(2) > a > div > strong
-bb = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.left_wrap.card_slider > div > div.swiper-wrapper > div.swiper-slide.vertical.swiper-slide-visible.swiper-slide-active > img')['src']
-print(bb)
+# bb = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.left_wrap.card_slider > div > div.swiper-wrapper > div.swiper-slide.vertical.swiper-slide-visible.swiper-slide-active > img')['src']
+# print(bb)
 
-lis = soup.select('#section08_0 > div > div > div > ul > li')
+# lis = soup.select('#section08_0 > div > div > div > ul > li')
 # a = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.left_wrap.card_slider > div > div.swiper-wrapper > div.swiper-slide.vertical.swiper-slide-visible.swiper-slide-active > img')['src']
-for li in lis:
-    b = li.select_one('a > div > strong')
-    print(b.text)
+# for li in lis:
+#     b = li.select_one('a > div > strong')
+#     print(b.text)
 
 #btnCardSelect > p.plate_img > img
 #cms_area > div.card_design_container.start > div > ul > li:nth-child(1) > a > p.plate_img > img
+
+global a
+a = 5
+
+def d():
+    a =7
+
+
+print(a)
+d()
+print(a)
