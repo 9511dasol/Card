@@ -84,6 +84,44 @@
         section>nav:hover>a {
             color: red;
         }
+        .sc
+        {
+            text-decoration: none;
+            color: black;
+        }
+        
+        .mybox {
+            width: 95%;
+            max-width: 900px;
+            max-height: 300px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px lightblue;
+            margin: 20px auto;
+        }
+
+        .mybox>li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 10px;
+            min-height: 48px;
+        }
+
+        .card-body {
+            clear: right;
+        }
+
+        img {
+            max-width: 30%;
+            max-height: 30%;
+            width: auto !important;
+            height: auto;
+            display: block;
+            margin: auto;
+            float: left;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -114,12 +152,78 @@
             <nav><a href="find_card.html">카드 찾기</a></nav>
             |
             <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
-            |  
+            |
             <nav><a href="qna.html">QnA</a></nav>
             |
         </section>
     </div>
-
+    <div class="sc">
+        <section>
+            |
+            <nav><a href=""><strong>신한카드</strong></a></nav>
+            |
+            <nav><a href="">현대카드</a></nav>
+            |
+            <nav><a href="">삼성카드</a></nav>
+            |
+            <nav><a href="">우리카드</a></nav>
+            |
+        </section>
+    </div>
+    <div id="card-list">
+        <div class="mybox">
+            <li>
+                <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                    class="card-img-top">
+                <div class="card-body">
+                    <div class="card-body">
+                        <h5 class="card-title">청춘대로 톡톡카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                        <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                    </div>
+                </div>
+            </li>
+        </div>
+        <div class="mybox">
+            <li>
+                <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                    class="card-img-top">
+                <div class="card-body">
+                    <div class="card-body">
+                        <h5 class="card-title">청춘대로 톡톡카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                        <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                    </div>
+                </div>
+            </li>
+        </div>
+        <div class="mybox">
+            <li>
+                <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                    class="card-img-top">
+                <div class="card-body">
+                    <div class="card-body">
+                        <h5 class="card-title">청춘대로 톡톡카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                        <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </div>
 </body>
 
 </html>
+
+<!-- <div class="col">
+    <div class="card h-100">
+        <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+            class="card-img-top">
+        <strong><a href="#">카드 자세히 보기</a></strong>
+                    <div class="read_bt"><a href="#">카드 만들기</a></div>
+        </div>
+    </div>
+</div> -->
