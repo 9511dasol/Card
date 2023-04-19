@@ -13,10 +13,10 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>QnA</title>
+    <title>카드 등록 - 카드 목록</title>
 
-    <meta property="og:title" content="QnA" />
-    <meta property="og:description" content="QnA" />
+    <meta property="og:title" content="카드 등록" />
+    <meta property="og:description" content="카드 등록 - 개발자" />
     <meta property="og:image"
         content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
 
@@ -29,7 +29,7 @@
 
         .mypic {
             width: 100%;
-            height: 200px;
+            height: 300px;
 
             background-image: linear-gradient(0deg,
                     rgba(0, 0, 0, 0.5),
@@ -38,7 +38,7 @@
             background-position: center 30%;
             background-size: cover;
 
-            color: black;
+            color: white;
 
             display: flex;
             flex-direction: column;
@@ -46,53 +46,13 @@
             justify-content: center;
         }
 
-        a {
-            text-decoration: none;
-            color: wheat;
-            /* color:inherit; 해도 됩니다. */
-        }
-        .qna>a{
-            color: black;
-        }
-        div {
-            text-align: center;
-        }
-
-        div>a {
-            font-size: 4rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        /* section를 목록(list)이라고 보시면 됩니다. */
-        section {
-            display: block;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        /* section > nav를 항목(list-item)이라고 보시면 됩니다. */
-        section>nav {
-            display: inline-block;
-            width: 120px;
-        }
-
-        /* section > nav > a를 항목 텍스트라고 보시면 됩니다. */
-        section>nav>a {
-            /* 이렇게 해야 버튼에 빈 공백이 생기지 않는다. */
-            display: block;
-        }
-
-        section>nav:hover>a {
-            color: red;
-        }
-
         .mypost {
-            width: 150%;
-            max-width: 1000px;
+            width: 95%;
+            max-width: 500px;
             margin: 20px auto 20px auto;
+
             box-shadow: 0px 0px 3px 0px black;
-            padding: 50px;
+            padding: 20px;
         }
 
         .mypost>button {
@@ -100,9 +60,9 @@
         }
 
         .mycards {
+            margin: 20px auto 0px auto;
             width: 95%;
-            max-width: 500px;
-            margin: auto;
+            max-width: 1200px;
         }
 
         .mycards>.card {
@@ -113,7 +73,7 @@
     <script>
         $(document).ready(function () {
             set_temp()
-
+            show_cards()
         });
         function set_temp() { // 온도 표기
             fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
@@ -124,29 +84,35 @@
                 $('#temp').text(temp) // 온도 Setting
             });
         }
-
-    </script>
+        function refresh() {
+            window.location.reload()
+        }
+  
+</script>
 </head>
 
 <body>
     <div class="mypic">
-        <div><a href="main.html">Title</a></div>
-        <section>
-            |
-            <nav><a href="famous_card.html">인기카드</a></nav>
-            |
-            <nav><a href="find_card.html">카드 찾기</a></nav>
-            |
-            <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
-            |
-            <nav><a href="qna.html"><strong>QnA</strong></a></nav>
-            |
-        </section>
+        <h1>Add Faq</h1>
+        <p>현재기온: <span id="temp">--</span>도</p>
     </div>
-    <div class="qna">
-        <h2>현재기온: <span id="temp">--</span>도</h2>
-        <a href="contact.html">1:1 문의</a>
+    <div class="mypost" id="post-box">
+        
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="url" />
+            <label for="floatingInput">질문</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+                style="height: 200px"></textarea>
+            <label for="floatingTextarea2">답변</label>
+        </div>
+        <div class="mybtns">
+            <button onclick="add()" type="button" class="btn btn-dark">등록하기</button>
+            <button onclick="refresh()" type="button" class="btn btn-dark">초기화</button>
+        </div>
     </div>
+
 </body>
 
 </html>

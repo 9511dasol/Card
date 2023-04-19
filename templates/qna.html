@@ -51,9 +51,11 @@
             color: wheat;
             /* color:inherit; 해도 됩니다. */
         }
-        .qna>a{
+
+        .qna>a {
             color: black;
         }
+
         div {
             text-align: center;
         }
@@ -109,11 +111,53 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+        body {
+            background-color: white;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        details {
+            background-color: wheat;
+            color: black;
+            font-size: 1.5rem;
+        }
+
+        summary {
+            padding: .5em 1.3rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            transition: height 1s ease;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary:after {
+            content: "\002B";
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #aaa;
+            margin-bottom: .5em;
+        }
+
+        details[open] summary:after {
+            content: "\00D7";
+        }
+
+        details[open] div {
+            padding: .5em 1em;
+        }
     </style>
     <script>
         $(document).ready(function () {
             set_temp()
-
+            //road_faq()
         });
         function set_temp() { // 온도 표기
             fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
@@ -124,7 +168,14 @@
                 $('#temp').text(temp) // 온도 Setting
             });
         }
-
+        function contact() {
+            //<a href="contact.html"></a>
+            // 이 홈페이지로 옮기는 버튼 
+            window.location.href = 'contact.html'
+        }
+        function road_faq(){
+            $('#Faq').empty()
+        }
     </script>
 </head>
 
@@ -143,9 +194,59 @@
             |
         </section>
     </div>
+
     <div class="qna">
         <h2>현재기온: <span id="temp">--</span>도</h2>
-        <a href="contact.html">1:1 문의</a>
+    </div>
+    <!-- <a href="contact.html">1:1 문의</a> 그림으로 바꾸기~ -->
+
+
+    <div>
+        <h1>QnA</h1>
+        <div id="Faq">
+            <div class="container">
+                <details>
+                    <summary>How do I create accordion?</summary>
+                    <div>
+                        The tags <em>details</em> and <em>summary</em> have you covered.
+                    </div>
+                </details>
+            </div>
+            <div class="container">
+                <details>
+                    <summary>How do I create accordion?</summary>
+                    <div>
+                        The tags <em>details</em> and <em>summary</em> have you covered.
+                    </div>
+                </details>
+            </div>
+            <div class="container">
+                <details>
+                    <summary>How do I create accordion?</summary>
+                    <div>
+                        The tags <em>details</em> and <em>summary</em> have you covered.
+                    </div>
+                </details>
+            </div>
+            <div class="container">
+                <details>
+                    <summary>How do I create accordion?</summary>
+                    <div>
+                        The tags <em>details</em> and <em>summary</em> have you covered.
+                    </div>
+                </details>
+            </div>
+            <div class="container">
+                <details>
+                    <summary>How do I create accordion?</summary>
+                    <div>
+                        The tags <em>details</em> and <em>summary</em> have you covered.
+                    </div>
+                </details>
+            </div>
+        </div>
+        <p>찾으시는 ~</p>
+        <button onclick="contact()" type="button" class="btn btn-dark">1:1 문의</button>
     </div>
 </body>
 
