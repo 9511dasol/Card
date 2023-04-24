@@ -69,6 +69,44 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+        a {
+            text-decoration: none;
+            color: wheat;
+            /* color:inherit; 해도 됩니다. */
+        }
+
+        div {
+            text-align: center;
+        }
+
+        div>a {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* section를 목록(list)이라고 보시면 됩니다. */
+        section {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* section > nav를 항목(list-item)이라고 보시면 됩니다. */
+        section>nav {
+            display: inline-block;
+            width: 120px;
+        }
+
+        /* section > nav > a를 항목 텍스트라고 보시면 됩니다. */
+        section>nav>a {
+            /* 이렇게 해야 버튼에 빈 공백이 생기지 않는다. */
+            display: block;
+        }
+
+        section>nav:hover>a {
+            color: red;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -210,10 +248,10 @@
                     let Benefits = a['Benefits']
                     let pic_url = a['pic_url']
 
-                    $('#Benefit').val() = Benefits // 혜택란에 넣기
-                    $('#card_name').val() = cardname
+                    $('#Benefit').val(Benefits) // 혜택란에 넣기
+                    $('#card_name').val(cardname) 
                     if (pic_url) {
-                        $('#pic_url').val() = pic_url
+                        $('#pic_url').val(pic_url)
                     }
                 });
             })
@@ -334,8 +372,18 @@
 
 <body>
     <div class="mypic">
-        <h1>카드 관리</h1>
-        <p>현재기온: <span id="temp">--</span>도</p>
+        <div><a href="">Title</a></div>
+        <section>
+            |
+            <nav><a href="M_RES.html"><strong>카드 등록</strong></a></nav>
+            |
+            <nav><a href="M_faq.html">FAQ</a></nav>
+            |
+            <nav><a href="M_contact.html">1:1 문의 메세지</a></nav>
+            |
+            <nav><a href="">추가 요망</a></nav>
+            |
+        </section>
     </div>
     <div class="mypost">
         <div class="input-group mb-3">

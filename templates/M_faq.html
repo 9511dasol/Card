@@ -13,7 +13,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>카드 등록 - 카드 목록</title>
+    <title>FAQ MAKING</title>
 
     <meta property="og:title" content="카드 등록" />
     <meta property="og:description" content="카드 등록 - 개발자" />
@@ -69,6 +69,87 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+        body {
+            background-color: white;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        details {
+            background-color: wheat;
+            color: black;
+            font-size: 1.5rem;
+        }
+
+        summary {
+            padding: .5em 1.3rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            transition: height 1s ease;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary:after {
+            content: "\002B";
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #aaa;
+            margin-bottom: .5em;
+        }
+
+        details[open] summary:after {
+            content: "\00D7";
+        }
+
+        details[open] div {
+            padding: .5em 1em;
+        }
+
+        a {
+            text-decoration: none;
+            color: wheat;
+            /* color:inherit; 해도 됩니다. */
+        }
+
+        div {
+            text-align: center;
+        }
+
+        div>a {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* section를 목록(list)이라고 보시면 됩니다. */
+        section {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* section > nav를 항목(list-item)이라고 보시면 됩니다. */
+        section>nav {
+            display: inline-block;
+            width: 120px;
+        }
+
+        /* section > nav > a를 항목 텍스트라고 보시면 됩니다. */
+        section>nav>a {
+            /* 이렇게 해야 버튼에 빈 공백이 생기지 않는다. */
+            display: block;
+        }
+
+        section>nav:hover>a {
+            color: red;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -87,17 +168,27 @@
         function refresh() {
             window.location.reload()
         }
-  
-</script>
+
+    </script>
 </head>
 
 <body>
     <div class="mypic">
-        <h1>Add Faq</h1>
-        <p>현재기온: <span id="temp">--</span>도</p>
+        <div><a href="">Title</a></div>
+        <section>
+            |
+            <nav><a href="M_RES.html">카드 등록</a></nav>
+            |
+            <nav><a href="M_faq.html"><strong>FAQ</strong></a></nav>
+            |
+            <nav><a href="M_contact.html">1:1 문의 메세지</a></nav>
+            |
+            <nav><a href="">추가 요망</a></nav>
+            |
+        </section>
     </div>
     <div class="mypost" id="post-box">
-        
+
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="name" placeholder="url" />
             <label for="floatingInput">질문</label>
@@ -112,7 +203,48 @@
             <button onclick="refresh()" type="button" class="btn btn-dark">초기화</button>
         </div>
     </div>
-
+    <div id="Faq">
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+    </div>
 </body>
 
 </html>
