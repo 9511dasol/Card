@@ -10,8 +10,6 @@ db = client.dbsparta
 
 app = Flask(__name__)
 
-global doc
-
 @app.route('/')
 def home():
    return render_template('main.html')
@@ -88,7 +86,6 @@ def find_inquiries():
             CN = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
             card_name = so.text # 카드이름
 
-
             k = ''
             lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
             for li in lis: # 혜택 정보        
@@ -124,32 +121,54 @@ def find_inquiries():
                 k+=f'{li.text}\n'
     else:
         return jsonify({'msg': '다시 입력하여 주십시오'})
-    
-    global doc
-    doc ={
+    if(pic):  
+        doc ={
         'Card_Name' : card_name,
         'Benefits' : k,
         'pic_url' : pic,
+        'url': url,
+    }   
+    else:
+        doc ={
+        'Card_Name' : card_name,
+        'Benefits' : k,
+        'url': url,
     }
     db.im_card.insert_one(doc)
     return jsonify({'msg': 'finding~'}) # 조건을 db에 저장하는 코드
+
+@app.route("/del_im_card", methods=["POST"]) # 임시 데이타 삭제하기(카드 저장)
+def del_im_card():
+    url = request.form['url']
+    doc = {
+        'url' : url,
+    }
+    db.im_card.delete_one(doc)
+
+@app.route("/del_im_fc", methods=["POST"]) # 임시 데이타 삭제하기(카드 조회)
+def del_im_fc():
+    card_comp = request.form['company']
+    doc = {
+        'Company' : card_comp,
+    }
+    db.im_fc.delete_one(doc)
 
 @app.route("/findcards", methods=["POST"]) # 카드 찾기 post
 def find_cards():
     pdc = request.form['pdc']
     card_comp = request.form['company']
-    global doc
     doc ={
         'PDC' : pdc,
         'Company' : card_comp,
     }
+    db.im_fc.insert_one(doc) ## 일시적인 카드 찾기
     return jsonify({'msg': 'finding~'})
 
 @app.route("/delcard", methods=["POST"]) # 카드 삭제
 def del_card():
     innate_number = request.form['innate_number']
 
-    db.users.delete_one({'Innate_number' : innate_number})
+    db.card.delete_one({'Innate_number' : innate_number})
     return jsonify({'msg': 'Deleted!'})
 
 @app.route("/modify", methods=["POST"]) # 카드 수정
@@ -181,26 +200,23 @@ def modi_card():
         'pic_url' : pic_url,
         'using': using,
     }
-    db.users.update_one(In,{'$set':change})
+    db.card.update_one(In,{'$set':change})
     return jsonify({'msg': 'Updated!'})
 
 ###############################---Get----#####################################################
 @app.route("/findcards", methods=["GET"]) # 카드 찾기 get
 def findcards():
-    global doc
-    select_cards = list(db.card.find(doc,{'_id':False}))
+    select_cards = list(db.im_fc.find({},{'_id':False}))
     return jsonify({'result': select_cards})
 
 @app.route("/find_inquiries", methods=["GET"]) # find_inquiries_get
 def find_inquiries_get():
-    global doc
-    card = db.im_card.find_one(doc)
+    card = list(db.im_card.find({},{'_id':False}))
     return jsonify({'result': card})
 
 @app.route("/All_Card", methods=["GET"])
 def guestbook_get():    
     all_cards = list(db.card.find({},{'_id':False}))
-
     return jsonify({'result': all_cards})
 
 #1:1문의

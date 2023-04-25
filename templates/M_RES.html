@@ -69,6 +69,7 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
         a {
             text-decoration: none;
             color: wheat;
@@ -110,19 +111,9 @@
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
             show_cards()
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
-            });
-        }
-        
+
         function find_cards() { // 카드찾기
             let company = $('#company').val()
             let pdc = $('#PDC').val() // 포인트 / 할인형
@@ -189,8 +180,12 @@
                     $('#cards-box').append(html_text)
                 });
             })
+            fetch('/del_im_fc', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+            });
         }
-        
+
         function modi_card() { // 카드 수정
             let company = $('#company').val()
             let cardname = $('#cardname').val()
@@ -224,7 +219,7 @@
 
             });
         }
-        
+
         function del_card() { // 카드 삭제
             let innate_number = $('#innate_number').val() //카드 고유 번호 저장
 
@@ -249,14 +244,14 @@
                     let pic_url = a['pic_url']
 
                     $('#Benefit').val(Benefits) // 혜택란에 넣기
-                    $('#card_name').val(cardname) 
+                    $('#card_name').val(cardname)
                     if (pic_url) {
                         $('#pic_url').val(pic_url)
                     }
                 });
             })
         }
-        
+
         function find_inquiries() { // url을 이용한 카드 조회
             // 카드 이름, 혜택까지만
             let card_url = $('#card_url').val()
@@ -270,7 +265,15 @@
                 //window.location.reload()
 
             });
+            
             bring_card()
+
+            fetch('/del_im_card', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                //alert(data["msg"]); // -> 불러오는중
+                //window.location.reload()
+
+            });
         }
 
         function save_card() { // 카드 저장
@@ -308,7 +311,7 @@
 
             });
         }
-        
+
         function show_cards() { // 모든 카드 보이기
             fetch('/All_Card').then((res) => res.json()).then((data) => {
 
