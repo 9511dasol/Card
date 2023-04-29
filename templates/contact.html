@@ -107,7 +107,8 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
-        .rtn_qna>a{
+
+        .rtn_qna>a {
             text-align: left;
             text-decoration: none;
             color: black;
@@ -116,26 +117,36 @@
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
 
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
-            });
-        }
 
-        function clear() { //초기화 하기
-            window.location.reload()
-        }
+
         function send() { // 메일 보내기
             let comment = $('#comment').val()
             let name = $('#name').val()
             let Email = $('#email').val()
+            if (!comment) {
+                return alert("문의 내용을 입력하세요");
+            } else {
+                if (comment.length < 50) {
+
+                }
+            }
+            if (!name) {
+                return alert("이름을 입력하세요");
+            } else {
+                if (name.length < 2) {
+                    return alert("성과 이름을 입력해 주세요");
+
+                }
+            }
+            if (!Email) {
+                return alert("이메일을 입력하세요");
+            } else {
+                if (!Email.includes('@')) {
+                    return alert("이메일 형식이 올바르지 않습니다.");
+                }
+            }
 
             let formData = new FormData();
             formData.append("comment", comment);
@@ -163,7 +174,7 @@
             |
             <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
             |
-            <nav><a href="qna.html">QnA</a></nav>
+            <nav><a href="FAQ.html">FAQ</a></nav>
             |
         </section>
     </div>
@@ -183,13 +194,13 @@
         </div>
         <div class="mybtns">
             <button onclick="send()" type="button" class="btn btn-dark">보내기</button>
-            <button onclick="clear()" type="button" class="btn btn-outline-dark">초기화</button>
+            <button onclick="window.location.reload()" type="button" class="btn btn-outline-dark">초기화</button>
         </div>
     </div>
-    <div class = "rtn_qna">
+    <div class="rtn_qna">
         <a href="FAQ.html">QnA로 돌아가기</a>
     </div>
-    
+
 </body>
 
 </html>

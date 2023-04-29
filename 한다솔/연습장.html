@@ -6,17 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Main</title>
+    <title>연습장</title>
 
     <meta property="og:title" content="Card" />
     <meta property="og:description" content="Card" />
     <meta property="og:image"
         content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <style>
         /* 폰트 적용 */
         @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 
         html {
             font-family: "Noto Sans KR", sans-serif;
@@ -36,10 +39,7 @@
             list-style: none;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+
 
         /* 커스텀 */
 
@@ -47,6 +47,7 @@
         .slider-1 {
             height: 400px;
             position: relative;
+            background-color: wheat
         }
 
         /* 슬라이더 1 - 페이지 버튼 */
@@ -121,81 +122,163 @@
             left: auto;
             right: 20px;
         }
+
+        .mybox {
+            width: 95%;
+            max-width: 1200px;
+            max-height: 350px;
+            padding: 30px;
+            margin: 20px auto;
+        }
+
+        .mybox>li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 10px;
+            min-height: 48px;
+        }
+
+        .card-body {
+            clear: right;
+        }
+
+        img {
+            max-width: 30%;
+            max-height: 30%;
+            width: auto !important;
+            height: auto;
+            display: block;
+            margin: auto;
+            float: left;
+        }
     </style>
     <script>
-        console.clear();
+        $(function () {
+            console.clear();
 
-        // 기존 버튼형 슬라이더
-        $('.slider-1 > .page-btns > div').click(function () {
-            let $this = $(this);
-            let index = $this.index();
+            // 기존 버튼형 슬라이더
+            $('.slider-1 > .page-btns > div').click(function () {
+                let $this = $(this);
+                let index = $this.index();
 
-            $this.addClass('active');
-            $this.siblings('.active').removeClass('active');
+                $this.addClass('active');
+                $this.siblings('.active').removeClass('active');
 
-            let $slider = $this.parent().parent();
+                let $slider = $this.parent().parent();
 
-            let $current = $slider.find(' > .slides > div.active');
+                let $current = $slider.find(' > .slides > div.active');
 
-            let $post = $slider.find(' > .slides > div').eq(index);
+                let $post = $slider.find(' > .slides > div').eq(index);
 
-            $current.removeClass('active');
-            $post.addClass('active');
-        });
+                $current.removeClass('active');
+                $post.addClass('active');
+            });
 
-        // 좌/우 버튼 추가 슬라이더
-        $('.slider-1 > .side-btns > div').click(function () {
-            let $this = $(this);
-            let $slider = $this.closest('.slider-1');
+            // 좌/우 버튼 추가 슬라이더
+            $('.slider-1 > .side-btns > div').click(function () {
+                let $this = $(this);
+                let $slider = $this.closest('.slider-1');
 
-            let index = $this.index();
-            let isLeft = index == 0;
+                let index = $this.index();
+                let isLeft = index == 0;
 
-            let $current = $slider.find(' > .page-btns > div.active');
-            let $post;
+                let $current = $slider.find(' > .page-btns > div.active');
+                let $post;
 
-            if (isLeft) {
-                $post = $current.prev();
-            }
-            else {
-                $post = $current.next();
-            };
-
-            if ($post.length == 0) {
                 if (isLeft) {
-                    $post = $slider.find(' > .page-btns > div:last-child');
+                    $post = $current.prev();
                 }
                 else {
-                    $post = $slider.find(' > .page-btns > div:first-child');
-                }
-            };
+                    $post = $current.next();
+                };
 
-            $post.click();
+                if ($post.length == 0) {
+                    if (isLeft) {
+                        $post = $slider.find(' > .page-btns > div:last-child');
+                    }
+                    else {
+                        $post = $slider.find(' > .page-btns > div:first-child');
+                    }
+                };
+
+                $post.click();
+            });
+
+            setInterval(function () {
+                $('.slider-1 > .side-btns > div').eq(1).click();
+            }, 3000);
+
         });
 
-        setInterval(function () {
-            $('.slider-1 > .side-btns > div').eq(1).click();
-        }, 3000);
+
     </script>
 </head>
 
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
     <div class="slider-1">
         <div class="slides">
-            <div class="active"
-                style="background-image:url(https://images.prismic.io/stayfolio-production/73f99b79-336f-47fd-8ace-afc00978147d_banner.jpg?auto=compress,format);">
+            <div class="active">
+                <div class="mybox">
+                    <li>
+                        <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                            class="card-img-top">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <h5 class="card-title">청춘대로 톡톡카드</h5>
+                                <p>비자: 18000, 국내 15000</p>
+                                <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                                <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                            </div>
+                        </div>
+                    </li>
+                </div>
             </div>
-            <div
-                style="background-image:url(https://images.prismic.io/stayfolio-production/038914a1-9b23-4f26-9b10-84669d9a1339_banner.jpg?auto=compress,format);">
+            <div class="mybox">
+                <li>
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
             </div>
-            <div
-                style="background-image:url(https://images.prismic.io/stayfolio-production/586abdef-7163-4629-9c39-6d7a627ae10e_01_banner_picture.jpg?auto=compress,format);">
+
+            <div class="mybox">
+                <li>
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
             </div>
-            <div
-                style="background-image:url(https://images.prismic.io/stayfolio-production/3b4bf417-3c41-4d05-b62c-f02a293ba115_banner.jpg?auto=compress,format);">
+            <div class="mybox">
+                <li>
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
             </div>
         </div>
         <div class="page-btns">

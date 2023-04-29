@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <title>Main</title>
 
@@ -22,9 +23,112 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <style>
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
         * {
-            font-family: "Noto Serif KR", serif;
+            font-family: "Noto Sans KR", sans-serif;
+
+        }
+
+        /* 노말라이즈 */
+        body,
+        ul,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+
+
+        /* 커스텀 */
+
+        /* 슬라이더 1 시작 */
+        .slider-1 {
+            height: 400px;
+            position: relative;
+            background-color: wheat;
+        }
+
+        /* 슬라이더 1 - 페이지 버튼 */
+        .slider-1>.page-btns {
+            text-align: center;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+        }
+
+        .slider-1>.page-btns>div {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, .5);
+            border-radius: 4px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .slider-1>.page-btns>div.active {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        /* 슬라이더 1 - 슬라이드 */
+
+        .slider-1>.slides>div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .slider-1>.slides>div.active {
+            opacity: 1;
+        }
+
+        /* 슬라이더 좌우 버튼 */
+        .slider-1>.side-btns>div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 25%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .slider-1>.side-btns>div:last-child {
+            left: auto;
+            right: 0;
+        }
+
+        .slider-1>.side-btns>div>span {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translatey(-50%);
+            background-color: white;
+            opacity: 0.5;
+            padding: 1px 13px;
+            border-radius: 50px;
+            font-size: 25px;
+        }
+
+        .slider-1>.side-btns>div:last-child>span {
+            left: auto;
+            right: 20px;
         }
 
         .mypic {
@@ -46,7 +150,12 @@
             justify-content: center;
         }
 
-        a {
+        .mypic>div>a {
+            text-decoration: none;
+            color: wheat;
+        }
+
+        .mypic>section>nav>a {
             text-decoration: none;
             color: wheat;
             /* color:inherit; 해도 됩니다. */
@@ -84,21 +193,99 @@
         section>nav:hover>a {
             color: red;
         }
+
+        .mybox {
+            width: 95%;
+            max-width: 1200px;
+            max-height: 350px;
+            padding: 30px;
+            margin: 20px auto;
+        }
+
+        .mybox>li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 10px;
+            min-height: 48px;
+        }
+
+        .card-body {
+            clear: right;
+        }
+
+        img {
+            max-width: 30%;
+            max-height: 30%;
+            width: auto !important;
+            height: auto;
+            display: block;
+            margin: auto;
+            float: left;
+        }
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
 
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
+        $(function () {
+            console.clear();
+
+            // 기존 버튼형 슬라이더
+            $('.slider-1 > .page-btns > div').click(function () {
+                let $this = $(this);
+                let index = $this.index();
+
+                $this.addClass('active');
+                $this.siblings('.active').removeClass('active');
+
+                let $slider = $this.parent().parent();
+
+                let $current = $slider.find(' > .slides > div.active');
+
+                let $post = $slider.find(' > .slides > div').eq(index);
+
+                $current.removeClass('active');
+                $post.addClass('active');
             });
-        }
+
+            // 좌/우 버튼 추가 슬라이더
+            $('.slider-1 > .side-btns > div').click(function () {
+                let $this = $(this);
+                let $slider = $this.closest('.slider-1');
+
+                let index = $this.index();
+                let isLeft = index == 0;
+
+                let $current = $slider.find(' > .page-btns > div.active');
+                let $post;
+
+                if (isLeft) {
+                    $post = $current.prev();
+                }
+                else {
+                    $post = $current.next();
+                };
+
+                if ($post.length == 0) {
+                    if (isLeft) {
+                        $post = $slider.find(' > .page-btns > div:last-child');
+                    }
+                    else {
+                        $post = $slider.find(' > .page-btns > div:first-child');
+                    }
+                };
+
+                $post.click();
+            });
+
+            setInterval(function () {
+                $('.slider-1 > .side-btns > div').eq(1).click();
+            }, 5000);
+
+        });
 
     </script>
 </head>
@@ -115,12 +302,102 @@
             |
             <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
             |
-            <nav><a href="qna.html">QnA</a></nav>
-            |  
+            <nav><a href="FAQ.html">QnA</a></nav>
+            |
         </section>
     </div>
-    <div class="">
-        
+    <div class="slider-1">
+        <div class="slides">
+            <div class="active">
+                <div class="mybox">
+                    <li>
+                        <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                            class="card-img-top">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <h5 class="card-title">청춘대로 톡톡카드</h5>
+                                <p>비자: 18000, 국내 15000</p>
+                                <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                                <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+            <div class="mybox">
+                <li>
+                    <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">많이 쓰는 영역, 교통 통신 스트리밍, 간편결제</p>
+                            <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
+            </div>
+
+            <div class="mybox">
+                <li>
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="mybox">
+                <li>
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">카카오뱅크 신한카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                            <p>전월 이용금액 포함:세금 공과금 등</p>
+                            <p>전월 이용금액 미포함: 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="mybox">
+                <li>
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+        <div class="page-btns">
+            <div class="active"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="side-btns">
+            <div>
+                <span><i class="fas fa-angle-left"></i></span>
+            </div>
+            <div>
+                <span><i class="fas fa-angle-right"></i></span>
+            </div>
+        </div>
     </div>
 
 </body>

@@ -236,12 +236,12 @@ def contact_post():
         'comment' : comment,
     }
 
-    db.SQ.insert_one(doc)
+    db.contact.insert_one(doc)
     return jsonify({'msg': '전송됐습니다'})
 
 @app.route("/contact", methods=["GET"])
 def contact_post():
-    all_SQ = list(db.SQ.find({},{'_id':False}))
+    all_SQ = list(db.contact.find({},{'_id':False}))
 
     return jsonify({'result': all_SQ})
 

@@ -165,6 +165,9 @@
                 $('#temp').text(temp) // 온도 Setting
             });
         }
+        function del() {
+            let title = $('#title').val()
+        }
         function refresh() {
             window.location.reload()
         }
@@ -206,10 +209,11 @@
     <div id="Faq">
         <div class="container">
             <details>
-                <summary>How do I create accordion?</summary>
+                <summary id="title">How do I create accordion?</summary>
                 <div>
                     The tags <em>details</em> and <em>summary</em> have you covered.
                 </div>
+                <button onclick="del($('#title').text())" type="button" class="btn btn-dark">삭제</button>
             </details>
         </div>
         <div class="container">
@@ -218,6 +222,7 @@
                 <div>
                     The tags <em>details</em> and <em>summary</em> have you covered.
                 </div>
+                <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
             </details>
         </div>
         <div class="container">
