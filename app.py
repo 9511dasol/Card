@@ -95,7 +95,9 @@ def guestbook_get():
 def find_inquiries():
     url = request.form['url'] # 카드 상세 page
     card_comp = request.form['company'] # 카드 회사
-    bene = request.form['benefit'] # 현대카드시 이용
+    
+    if(card_comp =="현대"):
+        bene = request.form['hc'] # 현대카드시 이용
 
     if(url == None):
         return jsonify({'msg': 'URL을 입력하여 주십시오'})
@@ -171,13 +173,11 @@ def find_inquiries():
         'Card_Name' : card_name,
         'Benefits' : k,
         'pic_url' : pic,
-        'url': url,
     }   
     else:
         doc ={
         'Card_Name' : card_name,
         'Benefits' : k,
-        'url': url,
     }
     db.im_card.insert_one(doc)
     return jsonify({'msg': 'finding~'}) # 조건을 db에 저장하는 코드
@@ -185,6 +185,7 @@ def find_inquiries():
 @app.route("/find_inquiries", methods=["GET"]) # find_inquiries_get
 def find_inquiries_get():
     card = list(db.im_card.find({},{'_id':False}))
+    db.im_card.delete_one(card)
     return jsonify({'result': card})
 
 @app.route("/del_im_card", methods=["POST"]) # 임시 데이타 삭제하기(카드 저장)

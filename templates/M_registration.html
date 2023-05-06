@@ -237,27 +237,28 @@
         function bring_card() { // 카드 정보 로드하기(크롤링)
             fetch('/find_inquiries').then((res) => res.json()).then((data) => {// 수정 필요
                 // $('#card-list').empty()
-                let rows = data['result']
-                rows.forEach((a) => {
-                    let cardname = a['Card_Name']
-                    let Benefits = a['Benefits']
-                    let pic_url = a['pic_url']
+                let rows = data['result'];
 
-                    $('#Benefit').val(Benefits) // 혜택란에 넣기
-                    $('#card_name').val(cardname)
-                    if (pic_url) {
-                        $('#pic_url').val(pic_url)
-                    }
-                });
+                let cardname = rows['Card_Name'];
+                let Benefits = rows['Benefits'];
+                let pic_url = rows['pic_url'];
+
+                $('#Benefit').val(Benefits); // 혜택란에 넣기
+                $('#card_name').val(cardname);
+                if (pic_url) {
+                    $('#pic_url').val(pic_url);
+                };
             })
         }
 
         function find_inquiries() { // url을 이용한 카드 조회
             // 카드 이름, 혜택까지만
             let card_url = $('#card_url').val()
+            let hc = $('#hc').val()
 
             let formData = new FormData();
             formData.append("card_url", card_url);
+            formData.append("hc", hc)
 
             fetch('/find_inquiries', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
                 //console.log(data)
@@ -265,7 +266,7 @@
                 //window.location.reload()
 
             });
-            
+
             bring_card()
 
             fetch('/del_im_card', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
@@ -405,6 +406,17 @@
                 <option value="2">신한</option>
                 <option value="3">현대</option>
                 <option value="4">우리</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect02">카드_종류</label>
+            <select class="form-select" id="hc"> <!-- 현대카드 종류-->
+                <option selected>-- 현대카드일 때만 이용 --</option>
+                <option value="1">m</option>
+                <option value="2">x</option>
+                <option value="3">zero</option>
+                <option value="4">제휴</option>
+                <option value="5">나머지</option>
             </select>
         </div>
         <div class="input-group mb-3">

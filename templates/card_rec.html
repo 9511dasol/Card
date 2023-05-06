@@ -13,7 +13,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>Main</title>
+    <title>Recommend</title>
 
     <meta property="og:title" content="Card" />
     <meta property="og:description" content="Card" />
@@ -84,6 +84,107 @@
         section>nav:hover>a {
             color: red;
         }
+
+        .card_recommend {
+
+            width: 100%;
+
+            height: 100%;
+        }
+
+        .card-list {
+            width: 100%;
+        }
+
+
+        .middle {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .middle img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            height: auto;
+            display: block;
+        }
+
+        .mybox {
+            width: 95%;
+            max-width: 900px;
+            max-height: 300px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px lightblue;
+            margin: 20px auto;
+        }
+
+        .mybox>li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 10px;
+            min-height: 48px;
+        }
+
+        .card-body {
+            clear: right;
+        }
+
+        .mybox img {
+            max-width: 30%;
+            max-height: 30%;
+            width: auto !important;
+            height: auto;
+            display: block;
+            margin: auto;
+            float: left;
+        }
+
+        .mycards {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .card-body>a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .card-body>strong>a {
+            color: black;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .read_bt {
+            width: auto;
+            float: center;
+            padding-top: 30px;
+        }
+
+        .read_bt a {
+            width: 100%;
+            float: right;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #252525;
+            text-align: center;
+            padding: 10px 0px 10px 0px;
+            border-radius: 40px;
+            text-transform: uppercase;
+        }
+
+        .read_bt a:hover {
+            color: #ffffff;
+            background-color: #f5ddb6;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -116,13 +217,82 @@
             <nav><a href="card_rec.html">개발자 카드 추천</a></nav>
             |
             <nav><a href="FAQ.html">FAQ</a></nav>
-            |  
+            |
         </section>
     </div>
-    <div class="">
-        
-    </div>
+    <div class="card_recommend">
+        <div id="card-list">
+            <div class="mybox"> 메인 카드:
+                <li>
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:<br>세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+        <!-- ################### -->
+        <div class="middle">
+            <img src="https://creazilla-store.fra1.digitaloceanspaces.com/emojis/42881/plus-emoji-clipart-md.png">
+        </div>
+        <!-- ################### -->
+        <div class="mycards"> 서브 카드:
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                            class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">카카오뱅크 신한카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <strong>⭐개발자 추천 카드⭐</strong>
+                            <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                            <p>전월 이용금액 포함:세금 공과금 등</p>
+                            <p>전월 이용금액 미포함: 상품권 등</p>
+                            <strong><a href="#">카드 자세히 보기</a></strong>
+                            <div class="read_bt"><a href="#">카드 만들기</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
+                            class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">삼성 ID ON 카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">많이 쓰는 영역, 교통 통신 스트리밍, 간편결제</p>
+                            <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                            <strong><a href="#">카드 자세히 보기</a></strong>
+                            <div class="read_bt"><a href="#">카드 만들기</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                            class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">청춘대로 톡톡카드</h5>
+                            <p>비자: 18000, 국내 15000</p>
+                            <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                            <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                            <strong><a href="#">카드 자세히 보기</a></strong>
+                            <div class="read_bt"><a href="#">카드 만들기</a></div>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>

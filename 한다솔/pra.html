@@ -23,51 +23,101 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
         rel="stylesheet" />
     <style>
-        * {
-            font-family: "Noto Serif KR", serif;
+        .paddind_bottom_0 {
+            padding-bottom: 0 !important;
         }
 
-        .mypic {
+        .btn-custom {
+            margin-top: 20px;
+            background-color: transparent !important;
+            border: 2px solid #ddd;
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+
+        .lead {
+            font-size: 18px;
+            line-height: 30px;
+            color: #767676;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-control:focus {
+            border-color: #ffffff !important;
+            box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25);
+        }
+
+        .navbar-form input {
+            border: none !important;
+        }
+
+        .badge {
+            font-weight: 500;
+        }
+
+        blockquote {
+            margin: 20px 0 20px;
+            padding: 30px;
+        }
+
+        button {
+            border: 0;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .full {
+            float: left;
             width: 100%;
-            height: 300px;
-
-            background-image: linear-gradient(0deg,
-                    rgba(0, 0, 0, 0.5),
-                    rgba(0, 0, 0, 0.5)),
-                url("https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800");
-            background-position: center 30%;
-            background-size: cover;
-
-            color: white;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
-        .mypost {
-            width: 95%;
-            max-width: 500px;
-            margin: 20px auto 20px auto;
-
-            box-shadow: 0px 0px 3px 0px black;
-            padding: 20px;
+        .layout_padding {
+            padding-top: 90px;
+            padding-bottom: 0px;
         }
 
-        .mypost>button {
-            margin-top: 15px;
+        .padding_0 {
+            padding: 0px;
         }
 
-        .mycards {
-            margin: 20px auto 0px auto;
-            width: 95%;
-            max-width: 1200px;
+        .logo {
+            width: 18%;
+            float: left;
         }
 
-        .mycards>.card {
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .navbar {
+            padding: 20px 30px;
+        }
+
+        .navbar-expand-lg .navbar-nav .nav-link {
+            padding-right: 10px;
+            padding-left: 10px;
+            font-size: 18px;
+        }
+
+        .bg-light {
+            background-color: #fefeff !important;
+            box-shadow: 0px 0px 10px 0px;
+            border-top: 45px solid #333a44;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #24292f;
+            font-weight: 500;
+        }
+
+        .navbar-light .navbar-nav .nav-link:focus,
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #4f99e5;
+        }
+
+        .navbar-light .navbar-nav .active>.nav-link,
+        .navbar-light .navbar-nav .nav-link.active,
+        .navbar-light .navbar-nav .nav-link.show,
+        .navbar-light .navbar-nav .show>.nav-link {
+            color: #4f99e5;
         }
     </style>
     <script>
@@ -117,11 +167,11 @@
                 rows.forEach((a) => {
                     let cardname = a['Card_Name']
                     let Benefits = a['Benefits']
-                    let pic_url = a['pic_url'] 
+                    let pic_url = a['pic_url']
 
                     $('#Benefit').val() = Benefits // 혜택란에 넣기
                     $('#card_name').val() = cardname
-                    if(pic_url){
+                    if (pic_url) {
                         $('#pic_url').val() = pic_url
                     }
                 });
@@ -216,132 +266,42 @@
 </head>
 
 <body>
-    <div class="mypic">
-        <h1>카드 관리</h1>
-        <p>현재기온: <span id="temp">--</span>도</p>
-    </div>
-    <div class="mypost">
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">개발자 추천</label>
-            <select class="form-select" id="REC">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">O</option>
-                <option value="2">X</option>
-            </select>
-        </div>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect02">카드사</label>
-            <select class="form-select" id="SELECT">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">삼성</option>
-                <option value="2">신한</option>
-                <option value="3">현대</option>
-                <option value="4">우리</option>
-            </select>
-        </div>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">PDC</label>
-            <select class="form-select" id="PDC">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">Point</option>
-                <option value="2">Discount</option>
-            </select>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="card_url" placeholder="url" />
-            <label for="floatingInput">Card_URL</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="pic_url" placeholder="url" />
-            <label for="floatingInput">Pic_URL</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="card_name" placeholder="url" />
-            <label for="floatingInput">카드 이름</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="month_money" placeholder="url" />
-            <label for="floatingInput">전월 이용 금액</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave Notices here" id="Benefit"
-                style="height: 100px"></textarea>
-            <label for="floatingTextarea2">혜택</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave Notices here" id="Notice"
-                style="height: 100px"></textarea>
-            <label for="floatingTextarea2">주의사항</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave EXs here" id="use_ex" style="height: 100px"></textarea>
-            <label for="floatingTextarea2">사용 예시</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Membership_fee" id="MF" style="height: 100px"></textarea>
-            <label for="floatingTextarea2">연회비</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="innate_number" placeholder="url" />
-            <label for="floatingInput">카드 고유 번호</label>
-        </div>
-        <button onclick="find_inquiries()" type="button" class="btn btn-dark">
-            카드 조회
-        </button>
-        <button onclick="save_card()" type="button" class="btn btn-dark">
-            카드 등록
-        </button>
-        <button onclick="modi_card()" type="button" class="btn btn-dark">
-            카드 수정
-        </button>
-        <button onclick="del_card()" type="button" class="btn btn-dark">
-            카드 삭제
-        </button>
+    <div class="header_section">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ABOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">OUR PRODUCTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">VIDEO GAMES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">REMOT CONTROL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">CONTACT US</a>
+                    </li>
 
-    </div>
-    <div class="mycards">
-        <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
-                        class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">카카오뱅크 신한카드</h5>
-                        <p>비자: 18000, 국내 15000</p>
-                        <strong>⭐개발자 추천 카드⭐</strong>
-                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
-                        <p>전월 이용금액 포함:세금 공과금 등</p>
-                        <p>전월 이용금액 미포함: 상품권 등</p>
-                    </div>
-                </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">REGISTER</a>
+                    </li>
+                </ul>
             </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
-                        class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">삼성 ID ON 카드</h5>
-                        <p>비자: 18000, 국내 15000</p>
-                        <p class="card-text">많이 쓰는 영역, 교통 통신 스트리밍, 간편결제</p>
-                        <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
-                        class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">청춘대로 톡톡카드</h5>
-                        <p>비자: 18000, 국내 15000</p>
-                        <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
-                        <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        </nav>
     </div>
 </body>
 
 </html>
+
+<!-- https://query.tistory.com/entry/CSS-%EB%B0%98%EC%9D%91%ED%98%95-Navbar-%EC%A0%9C%EC%9E%91-wo-%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9 -->
