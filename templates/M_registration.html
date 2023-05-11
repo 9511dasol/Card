@@ -254,11 +254,17 @@
         function find_inquiries() { // url을 이용한 카드 조회
             // 카드 이름, 혜택까지만
             let card_url = $('#card_url').val()
-            let hc = $('#hc').val()
+            if (!card_url) {
+                alert("url이 빈칸입니다.")
+            }
 
             let formData = new FormData();
             formData.append("card_url", card_url);
-            formData.append("hc", hc)
+
+            if (card_url == "현대") {
+                let hc = $('#hc').val() //현대카드일 떄만
+                formData.append("hc", hc)
+            }
 
             fetch('/find_inquiries', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
                 //console.log(data)
@@ -450,7 +456,7 @@
         </div>
         <div class="form-floating">
             <textarea class="form-control" placeholder="Leave Notices here" id="Benefit"
-                style="height: 100px">전월 이용금액 포함: 전월 이용금액 미포함:</textarea>
+                style="height: 100px">전월 이용금액 포함: 만원 전월 이용금액 미포함:</textarea>
             <label for="floatingTextarea2">주의사항</label>
         </div>
         <div class="form-floating">

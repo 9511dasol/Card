@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7bb20b58e4.js" crossorigin="anonymous"></script>
+    <title>카드 등록 - 카드 목록</title>
+
+    <meta property="og:title" content="카드 등록" />
+    <meta property="og:description" content="카드 등록 - 개발자" />
+    <meta property="og:image"
+        content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300&display=swap');
+
+        :root {
+            --text-color: white;
+            --backround-color: black;
+            --accent-color: wheat;
+        }
+
+        body {
+            margin: 0px;
+            line-height: 2;
+            font-weight: normal;
+            overflow-x: hidden !important;
+            /* font-family: 'source sans pro'; */
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: wheat;
+            padding: 8px 12px;
+        }
+
+        .navbar_logo {
+            font-size: 24px;
+            color: black;
+        }
+
+        .navbar_logo i {
+            color: black;
+        }
+
+        .navbar_menu {
+            display: flex;
+            list-style: none;
+            padding-left: 0;
+            padding-top: 19px;
+            font-size: 20px;
+        }
+
+        .navbar_menu li {
+            padding: 8px 12px;
+        }
+
+        .navbar_menu li:hover {
+            background-color: blanchedalmond;
+            border-radius: 5px;
+        }
+
+        .navbar_icons {
+            font-size: 30px;
+            list-style: none;
+            color: black;
+            display: flex;
+            padding-left: 0;
+        }
+
+        .navbar_icons li {
+            padding: 8px 12px;
+        }
+
+        .navbar_icons li:hover {
+            background-color: blanchedalmond;
+
+        }
+
+        .navbar_toogleBtn {
+            display: none;
+            position: absolute;
+            right: 32px;
+            font-size: 24px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 8px 24px;
+            }
+
+            .navbar_menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar_menu li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar_icons {
+                display: none;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .navbar_toogleBtn {
+                display: block;
+            }
+
+            .navbar_menu.active,
+            .navbar_icons.active {
+                display: flex;
+            }
+        }
+
+        .col-lg-6,
+        .col-sm-12,
+        .col-sm-3 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .layout_padding {
+            padding-top: 90px;
+            padding-bottom: 0px;
+        }
+
+        
+
+        .container {
+            max-width: 1140px;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .container ul,
+        li,
+        ol {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+
+        .row {
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .footer_section {
+            display: block;
+            width: 100%;
+            float: left;
+            background-color: rgba(0, 0, 0, 0.692);
+            height: auto;
+            padding-bottom: 45px;
+        }
+
+        .footer_section {
+            display: block;
+            width: 100%;
+            float: left;
+        }
+
+        .address_text {
+            width: 100%;
+            float: left;
+            font-size: 26px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .simply_text {
+            width: 71%;
+            float: left;
+            font-size: 16px;
+            color: white;
+            margin-left: 0px;
+
+        }
+
+        .footer_menu_main {
+            width: 100%;
+            float: left;
+        }
+
+        .footer_left {
+            width: 50%;
+            float: left;
+        }
+
+        .footer_right {
+            width: 50%;
+            float: left;
+        }
+
+        .footer_menu {
+            width: 100%;
+            float: left;
+            font-size: 16px;
+            color: white;
+        }
+
+        .footer_menu ul {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .footer_menu li {
+            font-size: 16px;
+            color: white;
+        }
+
+        .footer_menu li a {
+            color: white;
+        }
+
+        .footer_menu li a:hover {
+            color: wheat;
+        }
+
+        .newsletter_section {
+            width: 100%;
+            float: left;
+        }
+
+        .newsletter_left {
+            width: 50%;
+            float: left;
+        }
+
+        .newsletter_right {
+            width: 32%;
+            float: right;
+        }
+
+        .social_icon {
+            width: 100%;
+            float: left;
+            font-size: 16px;
+            color: white;
+        }
+
+        .social_icon ul {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .social_icon li {
+            font-size: 16px;
+            color: white;
+            float: left;
+            padding-left: 20px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+        });
+
+        $(function () {
+            const toggleBtn = document.querySelector('.navbar_toogleBtn');
+            const menu = document.querySelector('.navbar_menu');
+            const icons = document.querySelector('.navbar_icons');
+
+            toggleBtn.addEventListener('click', () => {
+                menu.classList.toggle('active');
+                icons.classList.toggle('active');
+            });
+        })
+
+
+
+    </script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar_logo">
+            <i class="fa-regular fa-credit-card"></i>
+            <a href="#">Card</a>
+        </div>
+        <ul class="navbar_menu">
+            <li><a href="#">인기카드</a></li>
+            <li><a href="#">카드 찾기</a></li>
+            <li><a href="#">개발자 카드 추천</a></li>
+            <li><a href="#">FAQ</a></li>
+        </ul>
+        <a href="#" class="navbar_icons">
+            <li><i class="fa-brands fa-instagram"></i></li>
+        </a>
+        <a href="#" class="navbar_toogleBtn">
+            <i class="fa-solid fa-bars"></i>
+        </a>
+    </nav>
+    <div class="footer_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <h4 class="address_text">Made by</h4>
+                    <div class="footer_menu">
+                        <ul>
+                            <li>우재현</li>
+                            <li>이강성</li>
+                            <li>한다솔</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <h4 class="address_text">QUICK LINKS</h4>
+                    <div class="footer_menu_main">
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="index.html.html">Home</a></li>
+                                <li><a href="blog.html">인기카드</a></li>
+                                <li><a href="about.html">카드 찾기</a></li>
+                                <li><a href="services.html">개발자 카드 추천</a></li>
+                                <li><a href="contact.html">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="newsletter_section">
+                        <div class="newsletter_left">
+                            <h4 class="address_text">추가하기</h4>
+                        </div>
+                        <div class="newsletter_right">
+                            <div class="social_icon">
+                                <ul>
+                                    <li><i class="fa-brands fa-instagram"></i></li>
+                                    <li><i class="fa-brands fa-instagram"></i></li>
+                                    <li><i class="fa-brands fa-instagram"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DDD -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!-- https://query.tistory.com/entry/CSS-%EB%B0%98%EC%9D%91%ED%98%95-Navbar-%EC%A0%9C%EC%9E%91-wo-%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9 -->

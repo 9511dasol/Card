@@ -8,8 +8,11 @@
 
 body {
     margin: 0px;
-
-    /* font-family: 'source sans pro'; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+        /* font-family: 'source sans pro'; */
 }
 
 a {
@@ -108,4 +111,223 @@ a {
     .navbar_icons.active {
         display: flex;
     }
+}
+
+/* 카드 추천 메인 */
+.card_list {
+    display: grid;
+    grid-template-columns: repeat(2, 380px);
+    /*줄 정하는 것*/
+    grid-template-rows: repeat(5, 190px);
+    padding: 10px;
+    grid-gap: 7px;
+    text-align: center;
+    line-height: 175px;
+
+}
+
+.card_list a {
+    text-decoration: none;
+}
+
+.card_select:hover {
+    background-color: whitesmoke;
+    transition: 0.7s;
+}
+
+.color1 {
+    background-color: antiquewhite;
+}
+
+.color2 {
+    background-color: wheat;
+
+}
+
+.color3 {
+    background-color: whitesmoke;
+
+}
+
+.color4 {
+    background-color: yellow;
+
+}
+
+.color5 {
+    background-color: yellowgreen;
+
+}
+
+.color6 {
+    background-color: teal;
+
+}
+
+.color7 {
+    background-color: tan;
+
+}
+
+.color8 {
+    background-color: tomato;
+
+}
+
+.color9 {
+    background-color: salmon;
+
+}
+
+.color10 {
+    background-color: slateblue;
+
+}
+
+/* 푸터 */
+.col-lg-6,
+.col-sm-12,
+.col-sm-3 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.layout_padding {
+    padding-top: 90px;
+    padding-bottom: 0px;
+}
+
+
+
+.container {
+    max-width: 1140px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container ul,
+li,
+ol {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.row {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.footer_section {
+    display: block;
+    width: 100%;
+    float: left;
+    background-color: rgba(0, 0, 0, 0.692);
+    height: auto;
+    padding-bottom: 45px;
+}
+
+.footer_section {
+    display: block;
+    width: 100%;
+    float: left;
+}
+
+.address_text {
+    width: 100%;
+    float: left;
+    font-size: 26px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.simply_text {
+    width: 71%;
+    float: left;
+    font-size: 16px;
+    color: white;
+    margin-left: 0px;
+
+}
+
+.footer_menu_main {
+    width: 100%;
+    float: left;
+}
+
+.footer_left {
+    width: 50%;
+    float: left;
+}
+
+.footer_right {
+    width: 50%;
+    float: left;
+}
+
+.footer_menu {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: white;
+}
+
+.footer_menu ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.footer_menu li {
+    font-size: 16px;
+    color: white;
+}
+
+.footer_menu li a {
+    color: white;
+}
+
+.footer_menu li a:hover {
+    color: wheat;
+}
+
+.newsletter_section {
+    width: 100%;
+    float: left;
+}
+
+.newsletter_left {
+    width: 50%;
+    float: left;
+}
+
+.newsletter_right {
+    width: 32%;
+    float: right;
+}
+
+.social_icon {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: white;
+}
+
+.social_icon ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.social_icon li {
+    font-size: 16px;
+    color: white;
+    float: left;
+    padding-left: 20px;
 }
