@@ -29,6 +29,8 @@ def save_card():
     pic_url = request.form['pic_url']
     using = request.form['using']
     url = request.form['url']
+    main_bene = request.form['main_bene']
+
     doc ={
         'Company' : card_comp,
         'Card_Name' : name,
@@ -41,6 +43,8 @@ def save_card():
         'MF' : Mf,
         'pic_url' : pic_url,
         'using': using,
+        'url': url,
+        'main_bene': main_bene,
     }
     db.card.insert_one(doc)
     return jsonify({'msg': 'Saved!'})
@@ -68,7 +72,7 @@ def modi_card():
     Mf = request.form['MF']
     pic_url = request.form['pic_url']
     using = request.form['using']
-
+    url = request.form['url']
     change ={
         'Company' : card_comp,
         'Card_Name' : name,
@@ -80,6 +84,7 @@ def modi_card():
         'MF' : Mf,
         'pic_url' : pic_url,
         'using': using,
+        'url': url,
     }
     db.card.update_one(In,{'$set':change})
     return jsonify({'msg': 'Updated!'})
@@ -106,7 +111,7 @@ def find_inquiries():
     data = requests.get(url, headers=headers)
     data.encoding = 'utf-8'
     soup = BeautifulSoup(data.text, 'html.parser')
-
+    k=''
            #cardCompareAfter > div.card_detail.gap80_40 > div.card_name_wrap > div
     if(card_comp =="신한"):    
         so = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.card_name_wrap > h1')
@@ -116,7 +121,7 @@ def find_inquiries():
         lis = soup.select('#section08_0 > div > div > div > ul > li') 
         for li in lis: # 혜택정보 나열
             a = li.select_one('a > div > strong')
-            benefits += f'{a.text}\n'         
+            k += f'{a.text}\n'         
         
     elif(card_comp =="삼성"):
         CN = soup.select_one('#contents > div > section:nth-child(1) > div.lists-card > div.card-tx > p')
@@ -173,11 +178,13 @@ def find_inquiries():
         'Card_Name' : card_name,
         'Benefits' : k,
         'pic_url' : pic,
+        'url': url
     }   
     else:
         doc ={
         'Card_Name' : card_name,
         'Benefits' : k,
+        'url': url
     }
     db.im_card.insert_one(doc)
     return jsonify({'msg': 'finding~'}) # 조건을 db에 저장하는 코드
@@ -185,7 +192,6 @@ def find_inquiries():
 @app.route("/find_inquiries", methods=["GET"]) # find_inquiries_get
 def find_inquiries_get():
     card = list(db.im_card.find({},{'_id':False}))
-    db.im_card.delete_one(card)
     return jsonify({'result': card})
 
 @app.route("/del_im_card", methods=["POST"]) # 임시 데이타 삭제하기(카드 저장)
@@ -221,6 +227,26 @@ def del_im_fc():
         'Company' : card_comp,
     }
     db.im_fc.delete_one(doc)
+
+@app.route("/bring_info", methods=["POST"]) # 임시 데이타 삭제하기(카드 조회)
+def bring_info():
+    innate_number = request.form['innate_number']
+
+    doc = {
+        'Innate_number' : innate_number,
+    }
+    db.innate.insert_one(doc)
+    return jsonify({'msg': '불러오는중'})
+
+@app.route("/bring_info", methods=["GET"]) # 임시 데이타 삭제하기(카드 조회)
+def bring_card_info():
+    innate_number = list(db.innate.find({},{'_id':False})) # innate애서 1개 불러오기
+    info = list(db.all_info.find(innate_number,{'_id':False})) # 해당 정보 찾아오기
+    db.innate.delete_one(innate_number) # 방급 찾은 innate에서 자료 삭제하기
+    return jsonify({'result': info}) # 해단 정보 프론트에 보내기
+    
+
+
 
 ##############################################
 

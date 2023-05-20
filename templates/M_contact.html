@@ -160,7 +160,6 @@
     </style>
     <script>
         $(document).ready(function () {
-            show_cards()
         });
         function set_temp() { // 온도 표기
             fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
@@ -197,8 +196,8 @@
             })
         }
         function del() {
-            let Contact = $('#Contact').val()
-
+            let a = $(this).parent().attr('#Contact')
+            console.log(a);
             let formData = new FormData();
             formData.append("company", Contact);
 
@@ -232,7 +231,7 @@
         <div class="card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p id="Contact">새로운 앨범 너무 멋져요!</p>
+                    <p id="Contact">새로운 앨범 너무 멋져요!1</p>
                     <footer class="blockquote-footer">이름</footer>
                     <footer class="blockquote-footer">avc@example</footer>
                     <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
@@ -242,7 +241,7 @@
         <div class="card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p id="Contact">새로운 앨범 너무 멋져요!</p>
+                    <p id="Contact">새로운 앨범 너무 멋져요!2</p>
                     <footer class="blockquote-footer">이름</footer>
                     <footer class="blockquote-footer">avc@example</footer>
                     <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
@@ -252,7 +251,7 @@
         <div class="card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p id="Contact">새로운 앨범 너무 멋져요!</p>
+                    <p id="Contact">새로운 앨범 너무 멋져요!3</p>
                     <footer class="blockquote-footer">이름</footer>
                     <footer class="blockquote-footer">avc@example</footer>
                     <button onclick="del()" type="button" class="btn btn-dark">삭제</button>

@@ -63,6 +63,14 @@
             margin: 20px auto 0px auto;
             width: 95%;
             max-width: 1200px;
+
+        }
+
+        .card img {
+            max-width: 200px;
+            max-height: 200px;
+            margin: auto;
+            display: block;
         }
 
         .mycards>.card {
@@ -112,12 +120,17 @@
     <script>
         $(document).ready(function () {
             show_cards()
+            alert('안녕하세요')
         });
 
         function find_cards() { // 카드찾기
             let company = $('#company').val()
             let pdc = $('#PDC').val() // 포인트 / 할인형
-
+            if(!company || !pdc) {
+                $('#company').val('')
+                $('#PDC').val('')
+                return alert('카드사 또는 PDC를 입력하여 주세요')
+            }
             let formData = new FormData();
             formData.append("company", company);
             formData.append("pdc", pdc);
@@ -234,6 +247,56 @@
 
         }
 
+        function bring_info() {// 카드 고유번호로 카드 정보 가져오기
+            let innate_number = $('#innate_number').val() // 고유번호
+
+            let formData = new FormData();
+            formData.append("innate_number", innate_number);
+
+            fetch('/bring_info', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                // window.location.reload()
+            });
+
+            bring_card_info()
+        }
+
+        function bring_card_info() {
+            fetch('/bring_info').then((res) => res.json()).then((data) => {// 수정 필요
+                //..  
+                let rows = data['result'];
+
+                let company = a['Company'];
+                let cardname = a['Card_Name'];
+                let pdc = a['PDC'];
+                let benefit = a['Benefit'];
+                let use_ex = a['use_ex'];
+                let rec = a['REC'];
+                let Notice = a['Notice'];
+                let card_img = a['card_img'];
+                let MF = a['MF'];
+                let pic_url = a['pic_url']; // 추가 사항
+                let using = a['using']; // 전월 이용 금액
+                let main_bene = a['main_bene'];
+                let url = a['url'];
+
+                $('#card_url').val(url)
+                $('#company').val(value = company) 
+                $('#cardname').val(cardname)
+                $('#PDC').val(value = pdc)
+                $('#benefit').val(benefit)
+                $('#use_ex').val(use_ex)
+                $('#REC').val(value = rec)
+                $('#Notice').val(Notice)
+                $('MF').val(MF)
+                $('#pic_url').val(pic_url)
+                $('#using').val(using)
+                $('#Main_bene').val(value = main_bene)
+                $('#card_url').val(url)
+            })
+        }
+        
         function bring_card() { // 카드 정보 로드하기(크롤링)
             fetch('/find_inquiries').then((res) => res.json()).then((data) => {// 수정 필요
                 // $('#card-list').empty()
@@ -254,15 +317,19 @@
         function find_inquiries() { // url을 이용한 카드 조회
             // 카드 이름, 혜택까지만
             let card_url = $('#card_url').val()
+            let hc = $('#hc').val() //현대카드일 떄만
+
             if (!card_url) {
-                alert("url이 빈칸입니다.")
+                return alert("url이 빈칸입니다.")
             }
 
             let formData = new FormData();
             formData.append("card_url", card_url);
 
-            if (card_url == "현대") {
-                let hc = $('#hc').val() //현대카드일 떄만
+            if (company == "현대") {
+                if (!hc) {
+                    return alert("현대카드 종류를 확인해주세요")
+                }
                 formData.append("hc", hc)
             }
 
@@ -294,8 +361,10 @@
             let REC = $('#REC').val() // 개발자 추천카드
             let Notice = $('#Notice').val() // 주의사항
             let MF = $('MF').val() // 연회비 Membership Fee
-            let pic_url = $('#pic_url').val() // 추가 사항
+            let pic_url = $('#pic_url').val() // 카드 사진
             let using = $('#using').val() // 전월이용금액
+            let main_bene = $('#Main_bene').val() // 메인 혜택
+            let url = $('#card_url').val() // 카드 url
 
             let formData = new FormData();
             formData.append("company", company);
@@ -310,6 +379,8 @@
             formData.append("innate_number", innate_number); // 카드 고유 번호
             formData.append("using", using);// 전월 이용 금액
             formData.append("card_url", card_url); // 카드 상세 홈페이지
+            formData.append("main_bene", main_bene); // 카드 메인 혜택
+            formData.append("url", url)
 
             fetch('/Savecard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
                 //console.log(data)
@@ -340,6 +411,9 @@
                     let MF = a['MF']
                     let pic_url = a['pic_url'] // 추가 사항
                     let using = a['using'] // 전월 이용 금액
+                    let main_bene = a['main_bene']
+                    let url = a['url']
+
                     html_text = ``
 
                     if (rec) {
@@ -353,7 +427,8 @@
                                                 <strong>⭐개발자 추천 카드⭐</strong>
                                                 <p class="card-text">${benefit}</p>
                                                 <p>${Notice}</p>
-                                                <p>${using}<p>
+                                                <p>${using}</p>
+                                                <p>주 혜택: ${main_bene}</p>
                                             </div>
                                         </div>
                                     </div>`
@@ -368,7 +443,9 @@
                                                 <p>${MF}</p>                                                
                                                 <p class="card-text">${benefit}</p>
                                                 <p>${Notice}</p>
-                                                <p>${using}<p>
+                                                <p>${using}</p>
+                                                <p>주 혜택: ${main_bene}</p>
+
                                             </div>
                                         </div>
                                     </div>`
@@ -399,38 +476,50 @@
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">개발자 추천</label>
             <select class="form-select" id="REC">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">O</option>
-                <option value="2">X</option>
+                <option selected></option>
+                <option value="O">O</option>
+                <option value="X">X</option>
             </select>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect02">카드사</label>
-            <select class="form-select" id="SELECT">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">삼성</option>
-                <option value="2">신한</option>
-                <option value="3">현대</option>
-                <option value="4">우리</option>
+            <select class="form-select" id="company">
+                <option selected></option>
+                <option value="삼성">삼성</option>
+                <option value="신한">신한</option>
+                <option value="현대">현대</option>
+                <option value="우리">우리</option>
             </select>
         </div>
         <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect02">카드_종류</label>
+            <label class="input-group-text" for="inputGroupSelect02">-- 현대카드일 때만 이용 --</label>
             <select class="form-select" id="hc"> <!-- 현대카드 종류-->
-                <option selected>-- 현대카드일 때만 이용 --</option>
-                <option value="1">m</option>
-                <option value="2">x</option>
-                <option value="3">zero</option>
-                <option value="4">제휴</option>
-                <option value="5">나머지</option>
+                <option selected></option>
+                <option value="m">m</option>
+                <option value="x">x</option>
+                <option value="zero">zero</option>
+                <option value="제휴">제휴</option>
+                <option value="나머지">나머지</option>
             </select>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">PDC</label>
             <select class="form-select" id="PDC">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">Point</option>
-                <option value="2">Discount</option>
+                <option selected></option>
+                <option value="Point">Point</option>
+                <option value="Discount">Discount</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">메인 혜택</label>
+            <select class="form-select" id="Main_bene">
+                <option selected></option>
+                <option value="기타">기타</option>
+                <option value="제휴">제휴</option>
+                <option value="길음">길음</option>
+                <option value="Air">Air</option>
+                <option value="5">Air</option>
+                <option value="6">Air</option>
             </select>
         </div>
         <div class="form-floating mb-3">
@@ -464,7 +553,8 @@
             <label for="floatingTextarea2">사용 예시</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Membership_fee" id="MF" style="height: 100px"></textarea>
+            <textarea class="form-control" placeholder="Membership_fee" id="MF"
+                style="height: 100px">Master: Visa: 국내: Amex: JCB: UNION: </textarea>
             <label for="floatingTextarea2">연회비</label>
         </div>
         <div class="form-floating mb-3">
@@ -490,6 +580,91 @@
     </div>
     <div class="mycards">
         <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">카카오뱅크 신한카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                        <p>전월 이용금액 포함:세금 공과금 등</p>
+                        <p>전월 이용금액 미포함: 상품권 등</p>
+                        <p>01001</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">카카오뱅크 신한카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                        <p>전월 이용금액 포함:세금 공과금 등</p>
+                        <p>전월 이용금액 미포함: 상품권 등</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">카카오뱅크 신한카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                        <p>전월 이용금액 포함:세금 공과금 등</p>
+                        <p>전월 이용금액 미포함: 상품권 등</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">카카오뱅크 신한카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                        <p>전월 이용금액 포함:세금 공과금 등</p>
+                        <p>전월 이용금액 미포함: 상품권 등</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">카카오뱅크 신한카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                        <p>전월 이용금액 포함:세금 공과금 등</p>
+                        <p>전월 이용금액 미포함: 상품권 등</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">카카오뱅크 신한카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <strong>⭐개발자 추천 카드⭐</strong>
+                        <p class="card-text">10번 결제당 캐시백, 배달, 택시</p>
+                        <p>전월 이용금액 포함:세금 공과금 등</p>
+                        <p>전월 이용금액 미포함: 상품권 등</p>
+                    </div>
+                </div>
+            </div>
             <div class="col">
                 <div class="card h-100">
                     <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"

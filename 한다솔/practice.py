@@ -22,13 +22,10 @@ soup = BeautifulSoup(data.text, 'html.parser')
 #btnCardSelect > p.plate_img > img
 #cms_area > div.card_design_container.start > div > ul > li:nth-child(1) > a > p.plate_img > img
 
-global a
-a = 5
-
-def d():
-    a =7
-
-
-print(a)
-d()
+a ={
+    {'name': 'SOMJANG', 'address': 'Dongjakgu, Seoul'},
+    { 'name': 'PUTTY', 'address': 'SSH World, Network'},
+    { 'name': 'donghyunjang', 'address': 'Seoul, Korea'},
+    { 'name': 'Avengers', 'address': 'Avengers Team Building, USA'},
+}
 print(a)
