@@ -176,7 +176,7 @@
                 let rows = data['result']
 
                 rows.forEach((a) => {
-
+                    i = 0
                     let name = a['name']
                     let comment = a['comment']
                     let email = a['email']
@@ -184,7 +184,7 @@
                     html_text = `<div class="card">
                                     <div class="card-body">
                                         <blockquote class="blockquote mb-0">
-                                            <p id="Contact">${comment}</p>
+                                            <p id="Contact${i}">${comment}</p>
                                             <footer class="blockquote-footer">${name}</footer>
                                             <footer class="blockquote-footer">${email}</footer>
                                             <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
@@ -192,14 +192,15 @@
                                     </div>
                                 </div>`
                     $('#comment-list').append(html_text)
+                    i++;
                 });
             })
         }
-        function del() {
-            let a = $(this).parent().attr('#Contact')
-            console.log(a);
+        function del(button) {
+            let contact = $(button).siblings('.contact-message').text();
+            // console.log(contact);
             let formData = new FormData();
-            formData.append("company", Contact);
+            formData.append("contact", contact);
 
             fetch('/contact_del', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
                 //console.log(data)
@@ -231,33 +232,34 @@
         <div class="card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p id="Contact">새로운 앨범 너무 멋져요!1</p>
+                    <p class="contact-message">새로운 앨범 너무 멋져요!1</p>
                     <footer class="blockquote-footer">이름</footer>
                     <footer class="blockquote-footer">avc@example</footer>
-                    <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
+                    <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
                 </blockquote>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p id="Contact">새로운 앨범 너무 멋져요!2</p>
+                    <p class="contact-message">새로운 앨범 너무 멋져요!2</p>
                     <footer class="blockquote-footer">이름</footer>
                     <footer class="blockquote-footer">avc@example</footer>
-                    <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
+                    <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
                 </blockquote>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p id="Contact">새로운 앨범 너무 멋져요!3</p>
+                    <p class="contact-message">새로운 앨범 너무 멋져요!3</p>
                     <footer class="blockquote-footer">이름</footer>
                     <footer class="blockquote-footer">avc@example</footer>
-                    <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
+                    <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
                 </blockquote>
             </div>
         </div>
+    </div>
 </body>
 
 </html>

@@ -153,24 +153,91 @@
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
-            show_cards()
+            show_faqs()
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
+        function save_faqs() { // 등록하기
+            let title = $('#question').val()
+            let detail = $('#detail').val()
+            let q_number = $('#q_number').val()
+
+            let formData = new FormData();
+
+            formData.append('title', title)
+            formData.append('detail', detail)
+            formData.append('q_number', q_number)
+
+            fetch('/save_faqs', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
+                alert(data["msg"]);
+                window.location.reload()
             });
         }
-        function del() {
-            let title = $('#title').val()
+        function update() { // 수정하기
+            let title = $('#question').val()
+            let detail = $('#detail').val()
+            let q_number = $('#q_number').val()
+
+            let formData = new FormData();
+
+            formData.append('title', title)
+            formData.append('detail', detail)
+            formData.append('q_number', q_number)
+
+            fetch('/update_faqs', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
+                alert(data["msg"]);
+                window.location.reload()
+            });
         }
-        function refresh() {
-            window.location.reload()
+        function refresh() { // 빈칸 초기화
+            // window.location.reload()
+            $('#question').val('')
+            $('#detail').val('')
         }
+        function show_faqs() { // 불러오기
+            fetch('/show_faqs').then((res) => res.json()).then((data) => {
+                $('#Faq').empty()
+
+                let rows = data['result'];
+
+                rows.forEach((a) => {
+                    let title = a['title'];
+                    let detail = a['detail'];
+                    let q_number = a['q_number']
+                    html_text = `<details>
+                                    <summary class="title">${title}</summary>
+                                    <div class="detail">${detail}</div>                                                    
+                                    <h1>질문 번호:</h1>
+                                    <p class="q_number">${q_number}</p>
+                                    <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                                    <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
+                                </details>`
+
+                    $('#Faq').append(html_text)
+
+                });
+            })
+        }
+        function del(button) { //삭제하기
+            let q_number = $(button).siblings('.q_number').text();
+
+            let formData = new FormData();
+
+            formData.append("q_number", q_number);
+            fetch('/del_faq', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
+                alert(data["msg"]);
+                window.location.reload()
+            });
+            // console.log(del);
+        }
+        function bring(button) { //수정 가져오기
+            let title = $(button).siblings('.title').text();
+            let detail = $(button).siblings('.detail').text();
+            let q_number = $(button).siblings('.q_number').text();
+
+            $('#question').val(title)
+            $('#detail').val(detail)
+            $('#q_number').val(q_number)
+        }
+
 
     </script>
 </head>
@@ -193,44 +260,56 @@
     <div class="mypost" id="post-box">
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" placeholder="url" />
+            <input type="text" class="form-control" id="question" placeholder="url" />
             <label for="floatingInput">질문</label>
         </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="q_number" placeholder="url" />
+            <label for="floatingInput">질문 번호</label>
+        </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+            <textarea class="form-control" placeholder="Leave a comment here" id="detail"
                 style="height: 200px"></textarea>
             <label for="floatingTextarea2">답변</label>
         </div>
         <div class="mybtns">
-            <button onclick="add()" type="button" class="btn btn-dark">등록하기</button>
+            <button onclick="save_faqs()" type="button" class="btn btn-dark">등록</button>
+            <button onclick="update()" type="button" class="btn btn-dark">수정</button>
             <button onclick="refresh()" type="button" class="btn btn-dark">초기화</button>
         </div>
     </div>
     <div id="Faq">
         <div class="container">
             <details>
-                <summary id="title">How do I create accordion?</summary>
-                <div>
-                    The tags <em>details</em> and <em>summary</em> have you covered.
+                <summary class="title">How do I create accordion?</summary>
+                <div class="detail">The tags <em>details</em> and <em>summary</em> have you covered.1
                 </div>
-                <button onclick="del($('#title').text())" type="button" class="btn btn-dark">삭제</button>
+                <h1>질문 번호:</h1>
+                <p class="q_number">0</p>
+                <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
             </details>
         </div>
         <div class="container">
             <details>
-                <summary>How do I create accordion?</summary>
-                <div>
-                    The tags <em>details</em> and <em>summary</em> have you covered.
+                <summary class="title">How do I create accordion?</summary>
+                <div class="detail">The tags <em>details</em> and <em>summary</em> have you covered.2
                 </div>
-                <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
+                <h1>질문 번호:</h1>
+                <p class="q_number">1</p>
+                <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
             </details>
         </div>
         <div class="container">
             <details>
-                <summary>How do I create accordion?</summary>
-                <div>
-                    The tags <em>details</em> and <em>summary</em> have you covered.
+                <summary class="title">How do I create accordion?</summary>
+                <div class="detail">The tags <em>details</em> and <em>summary</em> have you covered.3
                 </div>
+                <h1>질문 번호:</h1>
+                <p class="q_number">2</p>
+                <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
             </details>
         </div>
         <div class="container">
