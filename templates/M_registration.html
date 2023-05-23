@@ -148,7 +148,7 @@
                     let company = a['Company'] // 카드사
                     let cardname = a['Card_Name'] // 카드 이름
                     let pdc = a['PDC'] // 적립형 or 할인 = 수기
-                    let benefit = a['Benefit'] // 카드 혜택
+                    let benefit = a['Benefits'] // 카드 혜택
                     let innate_number = a['Innate_number'] // 카드 고유 번호 = 수기
                     let use_ex = a['Use_Ex'] // 카드 사용 예시 = 수기
                     let rec = a['REC'] // 카드 추천
@@ -212,7 +212,7 @@
             formData.append("company", company);
             formData.append("cardname", cardname);
             formData.append("pdc", pdc);
-            formData.append("benefit", benefit);
+            formData.append("Benefits", benefit);
             formData.append("innate_number", innate_number); // 카드 고유 번호
             formData.append("use_ex", use_ex); // 카드 사용 예시
             formData.append("REC", REC); // 추천
@@ -264,7 +264,7 @@
                 let company = a['Company'];
                 let cardname = a['Card_Name'];
                 let pdc = a['PDC'];
-                let benefit = a['Benefit'];
+                let benefit = a['Benefits'];
                 let use_ex = a['use_ex'];
                 let rec = a['REC'];
                 let Notice = a['Notice'];
@@ -289,13 +289,8 @@
                 $('#Main_bene').val(value = main_bene)
                 $('#card_url').val(url)
             })
-
-            fetch('/del_innate', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
-                //console.log(data)
-                // window.location.reload()
-            });
+            
         }
-
 
         function bring_card() { // 카드 정보 로드하기(크롤링)
             fetch('/find_inquiries').then((res) => res.json()).then((data) => {// 수정 필요
@@ -365,7 +360,7 @@
             formData.append("company", company);
             formData.append("cardname", cardname);
             formData.append("pdc", pdc);
-            formData.append("benefit", benefit);
+            formData.append("Benefits", benefit);
             formData.append("innate_number", innate_number); // 카드 고유 번호
             formData.append("use_ex", use_ex); // 카드 사용 예시
             formData.append("REC", REC); // 추천
@@ -396,7 +391,7 @@
                     let company = a['Company']
                     let cardname = a['Card_Name']
                     let pdc = a['PDC']
-                    let benefit = a['Benefis']
+                    let benefit = a['Benefits']
                     let innate_number = a['Innate_number']
                     let use_ex = a['use_ex']
                     let rec = a['REC']
@@ -447,6 +442,7 @@
                 });
             })
         }
+        
         function bring_this(button) {
             let innate_number = $(button).siblings('.IN').text();
             // console.log(innate_number)
@@ -476,7 +472,6 @@
             <select class="form-select" id="REC">
                 <option selected></option>
                 <option value="O">O</option>
-                <option value="X">X</option>
             </select>
         </div>
         <div class="input-group mb-3">

@@ -71,15 +71,64 @@
             set_temp()
 
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
-            });
+        function bring_card() {
+            fetch('/ss').then((res) => res.json()).then((data) => {
+
+                $('#cards-list').empty()
+
+                let rows = data['result']
+
+                rows.forEach((a) => {
+
+                    let company = a['Company']
+                    let cardname = a['Card_Name']
+                    let pdc = a['PDC']
+                    let benefit = a['Benefits']
+                    let innate_number = a['Innate_number']
+                    let use_ex = a['use_ex']
+                    let rec = a['REC']
+                    let Notice = a['Notice']
+                    let MF = a['MF']
+                    let card_img = a['pic_url']
+                    let using = a['using'] // 전월 이용 금액
+                    let url = a['url']
+                    let main_bene = a['main_bene']
+
+                    html_text = ``
+
+                    if (rec) {
+                        html_text = `<div class="mybox">
+                                        <li>
+                                            <img src="${card_img}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cardname}</h5>
+                                                <p>${MF}</p>
+                                                <p class="card-text">${benefit}</p>
+                                                <p>${Notice}</p>
+                                            </div>
+                                        </li>
+                                    </div>`
+
+                    } else {
+                        html_text = `<div class="mybox">
+                                        <li>
+                                            <img src="${card_img}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cardname}</h5>
+                                                <p>${MF}</p>
+                                                <p class="card-text">${benefit}</p>
+                                                <p>${Notice}</p>
+                                            </div>
+                                        </li>
+                                    </div>`
+                    }
+                    $('#cards-list').append(html_text)
+                });
+            })
         }
+        
 
     </script>
 </head>

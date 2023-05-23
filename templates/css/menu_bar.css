@@ -119,14 +119,12 @@ a {
     grid-template-columns: repeat(2, 380px);
     /*줄 정하는 것*/
     grid-template-rows: repeat(5, 190px);
-    padding: 10px;
     grid-gap: 5px;
     text-align: center;
     line-height: 175px;
-    width: 100%;
+    width: auto;
     max-width: 900px;
-    margin: 50px auto 50px auto;
-
+    margin: 10px auto 10px auto;
 }
 
 .card_list a {

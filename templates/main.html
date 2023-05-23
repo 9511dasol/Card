@@ -39,8 +39,74 @@
     </style>
     <script>
         $(document).ready(function () {
-
+            make_slider()
         });
+        function make_slider() {
+            fetch('/slider').then((res) => res.json()).then((data) => {
+
+                $('.slides').empty();
+
+                let rows = data['result'];
+                let i = 0;
+                rows.forEach((a) => {
+
+                    let company = a['Company'];
+                    let cardname = a['Card_Name'];
+                    let pdc = a['PDC'];
+                    let benefit = a['Benefits'];
+                    let innate_number = a['Innate_number'];
+                    let use_ex = a['use_ex'];
+                    let rec = a['REC'];
+                    let Notice = a['Notice'];
+                    let MF = a['MF'];
+                    let card_img = a['pic_url'];
+                    let using = a['using']; // 전월 이용 금액
+                    let url = a['url'];
+                    let main_bene = a['main_bene'];
+
+                    html_text = ``
+
+                    if (i == 0) {
+                        i++
+                        html_text = `<div class="active">
+                                        <div class="mybox">
+                                            <li>
+                                                <img src="${card_img}"
+                                                    class="card-img-top">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${cardname}</h5>
+                                                    <p>${MF}</p>
+                                                    <p class="card-text">${benefit}</p>
+                                                    <p>${Notice}</p>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    </div>`
+
+                    } else {
+                        i++ // 0 1 2 3 4 5
+                        html_text = `<div class="mybox">
+                                            <li>
+                                                <img src="${card_img}"
+                                                    class="card-img-top">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${cardname}</h5>
+                                                    <p>${MF}</p>
+                                                    <p class="card-text">${benefit}</p>
+                                                    <p>${Notice}</p>
+                                                </div>
+                                            </li>
+                                        </div>`
+                    }
+                    $('#cards-box').append(html_text)
+
+                    if (i == 5) {
+                        return false; //break
+                    }
+
+                });
+            })
+        }
 
     </script>
 </head>
@@ -93,7 +159,6 @@
                     </div>
                 </li>
             </div>
-
             <div class="mybox">
                 <li>
                     <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"

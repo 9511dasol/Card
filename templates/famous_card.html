@@ -29,12 +29,6 @@
             font-family: "Noto Serif KR", serif;
         }
 
-
-
-        
-
-        
-
         .card-body {
             clear: right;
         }
@@ -51,18 +45,8 @@
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
 
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
-            });
-        }
 
     </script>
 </head>
@@ -88,24 +72,24 @@
         </a>
     </nav>
     <div class="card_list">
-        <a href="famous_card_cate\sh.html">
+        <a href="famous_card\sh.html">
             <div class="color1 card_select">신한카드</div>
         </a>
-        <a href="famous_card_cate\kb.html">
-            <div class="color2 card_select">국민카드</div>
+        <a href="famous_card\hd.html">
+            <div class="color2 card_select">현대카드</div>
         </a>
-        <a href="famous_card_cate\ss.html">
+        <a href="famous_card\ss.html">
             <div class="color3 card_select">삼성카드</div>
         </a>
-        <a href="famous_card_cate\hd.html">
-            <div class="color4 card_select">현대카드</div>
+        <a href="famous_card\kb.html">
+            <div class="color4 card_select">국민카드</div>
         </a>
-        <div class="color5">item5</div>
-        <div class="color6">item6</div>
-        <div class="color7">item7</div>
-        <div class="color8">item8</div>
-        <div class="color9">item9</div>
-        <div class="color10">item10</div>
+        <div class="color5">준비중</div>
+        <div class="color6">준비중</div>
+        <div class="color7">준비중</div>
+        <div class="color8">준비중</div>
+        <div class="color9">준비중</div>
+        <div class="color10">준비중</div>
     </div>
     <div class="footer_section layout_padding">
         <div class="container">

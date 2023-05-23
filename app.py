@@ -20,7 +20,7 @@ def save_card():
     card_comp = request.form['company']
     name = request.form['cardname']
     pdc = request.form['pdc'] #3
-    benefit = request.form['benefit']
+    benefit = request.form['Benefits']
     innate_number = request.form['innate_number']
     use_ex = request.form['use_ex'] #6
     Rec = request.form['REC']
@@ -224,6 +224,8 @@ def findcards():
 def bring_info():
     innate_number = request.form['innate_number']
 
+    db.innate.delete_many({}) # 전부 제거
+
     doc = {
         'Innate_number' : innate_number,
     }
@@ -235,16 +237,6 @@ def bring_card_info():
     innate_number = list(db.innate.find({},{'_id':False})) # innate애서 1개 불러오기
     info = list(db.card.find(innate_number,{'_id':False})) # 해당 정보 찾아오기
     return jsonify({'result': info}) # 해단 정보 프론트에 보내기
-    
-@app.route("/del_innate", methods=["POST"]) # 임시 데이타 삭제하기(카드 조회)
-def del_innate():
-    innate_number = request.form['innate_number']
-
-    doc = {
-        'Innate_number' : innate_number,
-    }
-    db.innate.delete_one(doc)
-
 
 ##############################################
 
@@ -253,7 +245,7 @@ def del_innate():
 def contact_post():
     mail = request.form['pdc']
     name = request.form['company']
-    comment = request.form['Benefit']
+    comment = request.form['comment']
     
     doc ={
         'mail' : mail,
@@ -265,7 +257,7 @@ def contact_post():
     return jsonify({'msg': '전송됐습니다'})
 
 @app.route("/contact", methods=["GET"])
-def contact_post():
+def contact_get():
     all_SQ = list(db.contact.find({},{'_id':False}))
 
     return jsonify({'result': all_SQ})
@@ -280,7 +272,9 @@ def contact_del():
 
     db.contact.delete_one(doc)
     return jsonify({'msg': '전송됐습니다'})
+
 ################################## faq
+
 @app.route("/save_faqs", methods=["POST"])
 def save_faqs():
     title = request.form['title']
@@ -324,33 +318,53 @@ def del_faq():
     db.faq.delete_one(del_q)
     return jsonify({'msg': 'Deleted!'})
 
-
 @app.route("/show_faqs", methods=["GET"])
 def show_faqs():
     faqs = list(db.faq.find({},{'_id':False}))
     return jsonify({'result': faqs})
+
 ################################## user
 #카드착기
 @app.route("/user_find_card", methods=["POST"])
-def ():
+def user_find_card_post():
 @app.route("/user_find_card", methods=["GET"])
-def ():
+def user_find_card_get():
 
-# FAQ
-@app.route("/user_faq", methods=["GET"])
-def ():
 # 유명 카드
-@app.route("/famous_card", methods=["POST"])
-def ():
 
-@app.route("/famous_card", methods=["GET"])
-def ():
+
+@app.route("/sh", methods=["GET"])
+def famous_card_sh():
+    fc ={'Company' : "신한",}
+    famous_card = list(db.card.find(fc,{'_id':False}))
+    return jsonify({'result': famous_card})
+
+@app.route("/hd", methods=["GET"])
+def famous_card_hd():
+    fc ={'Company' : "현대",}
+    famous_card = list(db.card.find(fc,{'_id':False}))
+    return jsonify({'result': famous_card})
+
+@app.route("/ss", methods=["GET"])
+def famous_card_ss():
+    fc ={'Company' : "삼성",}
+    famous_card = list(db.card.find(fc,{'_id':False}))
+    return jsonify({'result': famous_card})
+
+@app.route("/kb", methods=["GET"])
+def famous_card_kb():
+    fc ={'Company' : "국민",}
+    famous_card = list(db.card.find(fc,{'_id':False}))
+    return jsonify({'result': famous_card})
+
+
+
 # 개발자 카드 추천
 @app.route("/card_rec", methods=["POST"])
-def ():
+def card_rec_post():
 
 @app.route("/card_rec", methods=["GET"])
-def ():
+def card_rec_get():
 
 #main
 @app.route("/slider", methods=["GET"])

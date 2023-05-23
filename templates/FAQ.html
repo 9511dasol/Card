@@ -107,25 +107,34 @@
     </style>
     <script>
         $(document).ready(function () {
-            set_temp()
-            //road_faq()
+            road_faq()
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
-            });
-        }
+        
         function contact() {
             //<a href="contact.html"></a>
             // 이 홈페이지로 옮기는 버튼 
             window.location.href = 'contact.html'
         }
         function road_faq() {
-            $('#Faq').empty()
+            fetch('/show_faqs').then((res) => res.json()).then((data) => {
+                $('#Faq').empty()
+
+                let rows = data['result'];
+
+                rows.forEach((a) => {
+                    let title = a['title'];
+                    let detail = a['detail'];
+                    let q_number = a['q_number']
+                    html_text = `<div class="container">
+                                    <details>
+                                        <summary class="title">${title}</summary>
+                                        <div class="detail">${detail}</div>                                                  
+                                    </details>
+                                </div>`
+                    $('#Faq').append(html_text)
+
+                });
+            })
         }
     </script>
 </head>

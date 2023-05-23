@@ -160,23 +160,15 @@
     </style>
     <script>
         $(document).ready(function () {
+            refresh()
         });
-        function set_temp() { // 온도 표기
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then((res) => res.json()).then((data) => {
-                let temp = data['temp'] // 온도 받아오기
-                //$('#temp').empty()
-                //temp_html = `${temp}`
-                //$('#temp').append(temp_html)
-                $('#temp').text(temp) // 온도 Setting
-            });
-        }
+        
         function refresh() {
-            fetch('/contact_bring').then((res) => res.json()).then((data) => {// 프론트 앤드 수정 요망
+            fetch('/contact').then((res) => res.json()).then((data) => {// 프론트 앤드 수정 요망
                 $('#comment-list').empty() // 초기화
                 let rows = data['result']
 
                 rows.forEach((a) => {
-                    i = 0
                     let name = a['name']
                     let comment = a['comment']
                     let email = a['email']
@@ -184,15 +176,15 @@
                     html_text = `<div class="card">
                                     <div class="card-body">
                                         <blockquote class="blockquote mb-0">
-                                            <p id="Contact${i}">${comment}</p>
+                                            <p class="contact-message">${comment}</p>
                                             <footer class="blockquote-footer">${name}</footer>
                                             <footer class="blockquote-footer">${email}</footer>
                                             <button onclick="del()" type="button" class="btn btn-dark">삭제</button>
                                         </blockquote>
                                     </div>
                                 </div>`
+                                
                     $('#comment-list').append(html_text)
-                    i++;
                 });
             })
         }
