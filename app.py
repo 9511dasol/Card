@@ -324,11 +324,64 @@ def show_faqs():
     return jsonify({'result': faqs})
 
 ################################## user
-#카드착기
+
+#카드착기################## 아래는 완료 230523
 @app.route("/user_find_card", methods=["POST"])
 def user_find_card_post():
+    db.im_cc.delete_many({}) #db 인의 내용 전부 삭제
+
+    company = request.form['company']
+    pdc = request.form['pdc']
+    Benefit = request.form['Benefit']
+
+    doc ={
+        'Company' : company,
+        'PDC' : pdc,
+        'key_benefits': Benefit,
+    }
+
+    db.im_cc.insert_one(save_faqs) # check_cards
+    return jsonify({'msg': '불러오는중!'})
+
 @app.route("/user_find_card", methods=["GET"])
 def user_find_card_get():
+    cc = db.im_cc.find_one()
+
+    a = cc['Company']
+    b = cc['PDC']
+    c = cc['key_benefits']
+
+    doc = {
+        'Company' : a,
+        'PDC' : b,
+        'key_benefits': c,
+    }
+    
+    condition = list(db.card.find(doc,{'_id':False}))
+    return jsonify({'result': condition})
+
+@app.route("/user_find_card_save", methods=["POST"])
+def user_find_card_one_post():
+    db.find_card_for.delete_many({}) #db 인의 내용 전부 삭제
+
+    card_name = request.form['card_name']
+    doc ={
+        'Card_Name' : card_name,
+    }
+    db.find_card_for.insert_one(doc) # check_cards
+    
+@app.route("/user_find_card_save", methods=["GET"])
+def user_find_card_one_get():
+    find_card_for = db.find_card_for.find_one()
+
+    a = find_card_for['Card_Name']
+
+    doc = {
+        'Card_Name' : a,
+    }
+
+    cards = list(db.card.find(doc,{'_id':False}))
+    return jsonify({'result': cards})
 
 # 유명 카드
 
@@ -378,7 +431,26 @@ if __name__ == '__main__':
 
 ############## 개방중인 코드##############
 @app.route("/", methods=["POST"])
-def ():
+def a():
+    q_number = request.form['q_number']
+    doc ={
+        'Company' : card_comp,
+        'Card_Name' : name,
+        'PDC' : pdc,
+        'Benefits' : benefit,
+        'Innate_number' : innate_number,
+        'Use_Ex' : use_ex,
+        'REC' : Rec,
+        'Notice' : Notice,
+        'MF' : Mf,
+        'pic_url' : pic_url,
+        'using': using,
+        'url': url,
+        'main_bene': main_bene,
+    }
 @app.route("/", methods=["GET"])
-def ():
+def b():
+    user = db.users.find_one({'name':'bobby'})
+    all_users = list(db.users.find({},{'_id':False}))
+
 

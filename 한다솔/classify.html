@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .filters-button-group {
+            text-align: right;
+            padding: 0;
+            margin: 0;
+        }
+
+        .filters-button-group li {
+            display: inline-block;
+            list-style: none;
+            margin-left: 40px;
+        }
+
+        .filters-button-group li a.active {
+            color: #F96699;
+        }
+
+        .tm-gallery {
+            margin: -10px;
+        }
+
+        .tm-gallery-item {
+            border-radius: 12px;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .tm-gallery-item a {
+            display: block;
+            line-height: 0;
+        }
+
+        .tm-gallery-item img {
+            width: 220px;
+            height: 220px;
+        }
+
+        @media (max-width: 940px) {
+            .filters-button-group {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 489px) {
+            .tm-gallery-item {
+                width: 48%;
+                margin: 1%;
+                height: auto;
+            }
+
+            .tm-gallery-item img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .tm-mb-80 {
+            margin-bottom: 80px;
+        }
+
+        .tm-mb-40 {
+            margin-bottom: 40px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="tm-gallery-section tm-mb-80">
+        <ul class="filters-button-group tm-mb-40">
+            <li><a href="#" data-filter=".city">City</a></li>
+            <li><a href="#" data-filter=".nature">Nature</a></li>
+            <li><a href="#" data-filter=".portraits">Portraits</a></li>
+            <li><a href="#" class="active" data-filter="*">Show All</a></li>
+        </ul>
+        <div class="tm-gallery">
+            <div class="tm-gallery-item city portraits">
+                <a href="img/img-01.jpg">
+                    <img src="img/tn-img-01.jpg" alt="City Scape" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item portraits">
+                <a href="img/img-02.jpg">
+                    <img src="img/tn-img-02.jpg" alt="Beautiful Lady" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item city">
+                <a href="img/img-03.jpg">
+                    <img src="img/tn-img-03.jpg" alt="City over cloud" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item nature">
+                <a href="img/img-04.jpg">
+                    <img src="img/tn-img-04.jpg" alt="Autumn Forest" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item city">
+                <a href="img/img-05.jpg">
+                    <img src="img/tn-img-05.jpg" alt="Skyscrapers Reflected" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item city">
+                <a href="img/img-06.jpg">
+                    <img src="img/tn-img-06.jpg" alt="City Night" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item nature portraits">
+                <a href="img/img-07.jpg">
+                    <img src="img/tn-img-07.jpg" alt="Gallery item" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item nature">
+                <a href="img/img-08.jpg">
+                    <img src="img/tn-img-08.jpg" alt="Gallery item" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item nature">
+                <a href="img/img-09.jpg">
+                    <img src="img/tn-img-09.jpg" alt="Gallery item" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item nature portraits">
+                <a href="img/img-10.jpg">
+                    <img src="img/tn-img-10.jpg" alt="Gallery item" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item nature">
+                <a href="img/img-11.jpg">
+                    <img src="img/tn-img-11.jpg" alt="Gallery item" class="img-fluid" />
+                </a>
+            </div>
+            <div class="tm-gallery-item portraits">
+                <a href="img/img-12.jpg">
+                    <img src="img/tn-img-12.jpg" alt="Gallery item" class="img-fluid" />
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

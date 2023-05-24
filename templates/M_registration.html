@@ -69,6 +69,8 @@
         .card img {
             max-width: 200px;
             max-height: 200px;
+            height: auto;
+            width: auto;
             margin: auto;
             display: block;
         }
@@ -289,7 +291,7 @@
                 $('#Main_bene').val(value = main_bene)
                 $('#card_url').val(url)
             })
-            
+
         }
 
         function bring_card() { // 카드 정보 로드하기(크롤링)
@@ -338,7 +340,7 @@
 
             bring_card()
 
-            
+
         }
 
         function save_card() { // 카드 저장
@@ -442,9 +444,9 @@
                 });
             })
         }
-        
+
         function bring_this(button) {
-            let innate_number = $(button).siblings('.IN').text();
+            let innate_number = $(button).siblings('.card_name').text();
             // console.log(innate_number)
             $('#innate_number').val(innate_number);
         }
@@ -545,9 +547,9 @@
             <textarea class="form-control" placeholder="Leave EXs here" id="use_ex" style="height: 100px"></textarea>
             <label for="floatingTextarea2">사용 예시</label>
         </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Membership_fee" id="MF"
-                style="height: 100px">Master: Visa: 국내: Amex: JCB: UNION: </textarea>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="Membership_fee"
+                id="MF">Master: Visa: 국내: Amex: JCB: UNION: </textarea>
             <label for="floatingTextarea2">연회비</label>
         </div>
         <div class="form-floating mb-3">
@@ -573,7 +575,6 @@
             불러오기
         </button>
     </div>
-
     <div class="mycards">
         <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
             <div class="col">
@@ -610,7 +611,7 @@
                     <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
                         class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card_name-title">청춘대로 톡톡카드</h5>
+                        <h5 class="card_name">청춘대로 톡톡카드</h5>
                         <p class="MF">비자: 18000, 국내 15000</p>
                         <p class="benefits">스타벅스, 페스트푸드, 간편결제</p>
                         <p class="caution">전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
