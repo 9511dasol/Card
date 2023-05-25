@@ -1,5 +1,4 @@
 /* 노말라이즈 */
-body,
 ul,
 li,
 h1,
@@ -7,7 +6,7 @@ h2,
 h3,
 h4,
 h5 {
-    margin: 0;
+    margin: 0 0 10px 0;
     padding: 0;
     list-style: none;
 }
@@ -18,9 +17,9 @@ h5 {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-    height: 400px;
+    height: 500px;
     position: relative;
-    background-color: white;
+    background-color: beige;
 }
 
 /* 슬라이더 1 - 페이지 버튼 */
@@ -35,14 +34,14 @@ h5 {
 .slider-1>.page-btns>div {
     width: 20px;
     height: 20px;
-    background-color: rgba(255, 255, 255, .5);
+    background-color: white(3, 1, 1);
     border-radius: 4px;
     display: inline-block;
     cursor: pointer;
 }
 
 .slider-1>.page-btns>div.active {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: black;
 }
 
 /* 슬라이더 1 - 슬라이드 */
@@ -67,10 +66,10 @@ h5 {
 /* 슬라이더 좌우 버튼 */
 .slider-1>.side-btns>div {
     position: absolute;
-    top: 0;
+    top: 38%;
     left: 0;
-    width: 25%;
-    height: 100%;
+    width: 10%;
+    height: 30%;
     cursor: pointer;
 }
 
@@ -97,39 +96,100 @@ h5 {
 }
 
 
-
-.mybox {
-    width: 95%;
-    max-width: 1200px;
-    max-height: 350px;
-    padding: 30px;
-    padding-left: 50px;
-    margin: 20px auto;
-    
-}
-
-.mybox>li {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 10px;
-    min-height: 48px;
-}
-
-.card-body {
-    text-align: center;
-}
-
-img {
-    max-width: 30%;
-    max-height: 30%;
-    width: auto !important;
-    height: auto !important;
-    display: block;
-    margin: auto;
+.about_section {
+    width: 100%;
     float: left;
-    text-align: center;
-
 }
+
+.layout_padding {
+    padding-top: 90px;
+    padding-bottom: 0px;
+}
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-sm-6 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.about_section {
+    text-align: center;
+}
+
+.layout_padding-bottom {
+    padding-bottom: 90px;
+}
+
+.card_box {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.card_head {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card_head h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.about_section .box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.about_section .box .img-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.about_section .box .img-box img {
+    width: 400px !important;
+}
+.img-box-h img{
+    width: 200px !important; 
+    height: auto;
+}
+.detail-box p {
+    margin-top: 0;
+    margin-top: 1rem;
+}
+
+
+

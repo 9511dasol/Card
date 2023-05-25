@@ -6,15 +6,6 @@
     --accent-color: wheat;
 }
 
-body {
-    margin: 0px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none
-        /* font-family: 'source sans pro'; */
-}
-
 a {
     text-decoration: none;
     color: black;
@@ -40,7 +31,7 @@ a {
 .navbar_menu {
     display: flex;
     list-style: none;
-    padding-left: 0;
+    margin: 0px auto 10px auto;
     padding-top: 19px;
     font-size: 20px;
 }
@@ -65,10 +56,9 @@ a {
 .navbar_icons li {
     padding: 8px 12px;
 }
-
 .navbar_icons li:hover {
     background-color: blanchedalmond;
-
+    
 }
 
 .navbar_toogleBtn {
@@ -82,7 +72,7 @@ a {
     .navbar {
         flex-direction: column;
         align-items: flex-start;
-        padding: 8px 24px;
+        padding: 20px 24px;
     }
 
     .navbar_menu {
@@ -196,7 +186,7 @@ a {
 }
 
 .layout_padding {
-    padding-top: 90px;
+    padding-top: 50px;
     padding-bottom: 0px;
 }
 

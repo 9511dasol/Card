@@ -51,10 +51,8 @@
         }
 
         .card img {
-            max-width: 200px;
-            max-height: 200px;
-            height: auto;
-            width: auto;
+            max-width: fit-content;
+            width: -webkit-fill-available;
             margin: auto;
             display: block;
         }
@@ -71,7 +69,6 @@
             text-transform: uppercase;
             display: block;
         }
-
     </style>
     <script>
         $(document).ready(function () {
@@ -191,9 +188,7 @@
             <li><a href="card_rec.html">개발자 카드 추천</a></li>
             <li><a href="FAQ.html">FAQ</a></li>
         </ul>
-        <a href="#" class="navbar_icons">
-            <li><i class="fa-brands fa-instagram"></i></li>
-        </a>
+
         <a href="#" class="navbar_toogleBtn">
             <i class="fa-solid fa-bars"></i>
         </a>
@@ -249,7 +244,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col" >
+            <div class="col">
                 <div class="card h-100">
                     <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
                         class="card-img-top">
@@ -257,6 +252,32 @@
                         <h5 class="card-title">삼성 ID ON 카드</h5>
                         <p>비자: 18000, 국내 15000</p>
                         <p class="card-text">많이 쓰는 영역, 교통 통신 스트리밍, 간편결제</p>
+                        <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        <a onclick="card_info(this)" href="#"><strong>카드 자세히 보기</strong></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">청춘대로 톡톡카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
+                        <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        <a onclick="card_info(this)" href="#"><strong>카드 자세히 보기</strong></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">청춘대로 톡톡카드</h5>
+                        <p>비자: 18000, 국내 15000</p>
+                        <p class="card-text">스타벅스, 페스트푸드, 간편결제</p>
                         <p>전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
                         <a onclick="card_info(this)" href="#"><strong>카드 자세히 보기</strong></a>
                     </div>

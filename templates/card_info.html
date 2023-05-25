@@ -13,12 +13,14 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7bb20b58e4.js" crossorigin="anonymous"></script>
-    <title>카드 등록 - 카드 목록</title>
+    <link rel="stylesheet" href="css\menu_bar.css">
+    
+    <title>카드 상세</title>
 
-    <meta property="og:title" content="카드 등록" />
-    <meta property="og:description" content="카드 등록 - 개발자" />
-    <meta property="og:image"
-        content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
+    <meta property="og:title" content="카드 상세" />
+    <meta property="og:description" content="카드 상세" />
+    <meta property="og:image" content="" />
+
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
         rel="stylesheet" />
@@ -138,15 +140,17 @@
 
         .card_info {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(1, 1fr);
             /*줄 정하는 것*/
-            grid-template-rows: repeat(5, 180px);
-            padding-top: 40px;
+            grid-template-rows: repeat(2, 180px);
             grid-gap: 10px;
-            text-align: center;
+            text-align: left;
             line-height: 175px;
-
+            width: auto;
+            margin: 10px auto 10px auto;
+            padding: auto;
         }
+
 
         .card_img {
             width: 95%;
@@ -203,15 +207,16 @@
             padding: .5em 1em;
         }
 
-        h3,
-        h1,
         h2 {
             text-align: left;
-            margin-left: 20px;
         }
 
         h4 {
             text-align: center;
+        }
+
+        .see {
+            margin: 10px;
         }
     </style>
     <script>
@@ -246,9 +251,6 @@
             <li><a href="card_rec.html">개발자 카드 추천</a></li>
             <li><a href="FAQ.html">FAQ</a></li>
         </ul>
-        <a href="#" class="navbar_icons">
-            <li><i class="fa-brands fa-instagram"></i></li>
-        </a>
         <a href="#" class="navbar_toogleBtn">
             <i class="fa-solid fa-bars"></i>
         </a>
@@ -261,13 +263,11 @@
         <h4>비자: 18000, 국내 15000</h4>
     </div>
     <div class="faq">
-        <h3>카드 혜택:</h3>
         <div class="box" id="Faq">
             <div class="container">
                 <details>
                     <summary>혜택</summary>
                     <div>
-                        <ul><a href=""> 자세히 보기 </a></ul>
                         <ul>10번 결제당 캐시백, 배달, 택시</ul>
                     </div>
                 </details>
@@ -280,14 +280,15 @@
                     </div>
                 </details>
             </div>
-            <a href="">자세히 보기</a>
+
+            <div class="see"><a href="#">자세히 보기</a></div>
         </div>
     </div>
     <div class="card_info">
-        <div class="benefits">
+        <div class="container">
             <h2>같이 쓰면 좋은 카드</h2>
         </div>
-        <div class="programer">
+        <div class="container">
             <h2>효율적인 사용 예시</h2>
         </div>
     </div>
@@ -296,5 +297,3 @@
 </body>
 
 </html>
-
-<!-- https://query.tistory.com/entry/CSS-%EB%B0%98%EC%9D%91%ED%98%95-Navbar-%EC%A0%9C%EC%9E%91-wo-%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9 -->
