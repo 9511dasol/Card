@@ -56,9 +56,10 @@ a {
 .navbar_icons li {
     padding: 8px 12px;
 }
+
 .navbar_icons li:hover {
     background-color: blanchedalmond;
-    
+
 }
 
 .navbar_toogleBtn {
@@ -187,7 +188,8 @@ a {
 
 .layout_padding {
     padding-top: 50px;
-    padding-bottom: 0px;
+    padding-bottom: 90px;
+    bottom: 0px;
 }
 
 

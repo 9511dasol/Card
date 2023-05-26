@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="css/tooplate-style.css" rel="stylesheet">
     <style>
         .filters-button-group {
             text-align: right;
@@ -69,8 +70,39 @@
         .tm-mb-40 {
             margin-bottom: 40px;
         }
-        
     </style>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script>
+        $(function () {
+            // Init the image gallery
+            var $gallery = $(".tm-gallery").isotope({
+                itemSelector: ".tm-gallery-item",
+                layoutMode: "fitRows"
+            });
+
+            // Layout Isotope after each image loads
+            $gallery.imagesLoaded().progress(function () {
+                $gallery.isotope("layout");
+            });
+
+            $(".filters-button-group").on("click", "a", function (e) {
+                e.preventDefault();
+                var filterValue = $(this).attr("data-filter");
+                $gallery.isotope({ filter: filterValue });
+                $('.filters-button-group a').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Magnific Pop up
+            $('.tm-gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                gallery: { enabled: true }
+            });
+        });
+    </script>
 </head>
 
 <body>

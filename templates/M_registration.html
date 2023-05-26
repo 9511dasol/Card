@@ -300,14 +300,17 @@
                 let rows = data['result'];
 
                 let cardname = rows['Card_Name'];
-                let Benefits = rows['Benefits'];
+                let Benefits = rows['Benefits']; // 리스트
                 let pic_url = rows['pic_url'];
+                let except = rwos['_expext']; // 리스트
+                
 
                 $('#Benefit').val(Benefits); // 혜택란에 넣기
                 $('#card_name').val(cardname);
                 if (pic_url) {
                     $('#pic_url').val(pic_url);
                 }
+                $('#Notice').val(except)
             })
         }
 
@@ -446,10 +449,19 @@
         }
 
         function bring_this(button) {
-            let innate_number = $(button).siblings('.card_name').text();
-            // console.log(innate_number)
+            // let innate_number = $(button).parents('#id or .class'). - 부모의 값 가져요기
+            // let innate_number = $(button).siblings('.IN').text(); # 자기 형제
+            // let innate_number = $(button).attr('value') # 속성 값 # 자기 자신 속성값
+            // let innate_number = $(button).text() # 자시 자신 text
+            let innate_number = $(button).attr('value')
+
+            // let val = $(button).$('.btn')
+            
+            // console.log(a)
             $('#innate_number').val(innate_number);
+            
         }
+
     </script>
 </head>
 
@@ -540,7 +552,7 @@
         </div>
         <div class="form-floating">
             <textarea class="form-control" placeholder="Leave Notices here" id="Notice"
-                style="height: 100px">전월 이용금액 포함: 만원 전월 이용금액 미포함:</textarea>
+                style="height: 100px"></textarea>
             <label for="floatingTextarea2">주의사항</label>
         </div>
         <div class="form-floating">
@@ -587,8 +599,7 @@
                         <strong class="REC">⭐개발자 추천 카드⭐</strong>
                         <p class="benefits">10번 결제당 캐시백, 배달, 택시</p>
                         <p class="caution">전월 이용금액 포함:세금 공과금 등<br>전월 이용금액 미포함: 상품권 등</p>
-                        <p class="IN">01001</p> <!--고유번호-->
-                        <button onclick="bring_this(this)" type="button" class="btn btn-dark">불러오기</button>
+                        <button onclick="bring_this(this)" type="button" class="btn btn-dark" value="01001">불러오기</button>
                     </div>
                 </div>
             </div>
@@ -601,8 +612,7 @@
                         <p class="MF">비자: 18000, 국내 15000</p>
                         <p class="benefits">많이 쓰는 영역, 교통 통신 스트리밍, 간편결제</p>
                         <p class="caution">전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
-                        <p class="IN">03001</p> <!--고유번호-->
-                        <button onclick="bring_this(this)" type="button" class="btn btn-dark">불러오기</button>
+                        <button onclick="bring_this(this)" type="button" class="btn btn-dark" value="03001">불러오기</button>
                     </div>
                 </div>
             </div>
@@ -615,8 +625,7 @@
                         <p class="MF">비자: 18000, 국내 15000</p>
                         <p class="benefits">스타벅스, 페스트푸드, 간편결제</p>
                         <p class="caution">전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
-                        <p class="IN">04001</p> <!--고유번호-->
-                        <button onclick="bring_this(this)" type="button" class="btn btn-dark">불러오기</button>
+                        <button onclick="bring_this(this)" type="button" class="btn btn-dark" value="04001">불러오기</button>
                     </div>
                 </div>
             </div>

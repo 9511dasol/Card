@@ -112,81 +112,99 @@ def find_inquiries():
     data = requests.get(url, headers=headers)
     data.encoding = 'utf-8'
     soup = BeautifulSoup(data.text, 'html.parser')
-    k=''
-    pic =''
+
+    _except = ''
+    benefits = ''
+    card_name = ''
+    card_pic =''
            #cardCompareAfter > div.card_detail.gap80_40 > div.card_name_wrap > div
     if(card_comp =="신한"):    
-        cn = soup.select_one('#cardCompareAfter > div.card_detail.gap80_40 > div.card_name_wrap > h1')
-        card_name = cn.text # 카드이름
+        # 카드이름
+        cn = soup.select_one('.hidden-text')
+        card_name = cn.get_text() 
         
+        # 카드 혜택
+        benes = soup.select('div.cont')
+        for i, bene in enumerate(benes):
+            benefits += f"{i+1}. {bene.select_one('strong.title').get_text()}\n"
 
-        lis = soup.select('#section08_0 > div > div > div > ul > li') 
-        for li in lis: # 혜택정보 나열
-            a = li.select_one('a > div > strong')
-            k += f'{a.text}\n'         
+        # 스크린샷
+        src = soup.select('div.swiper-slide')
+        for s in src:
+            a = s.select_one('img').get('src')
+            # a = s.select_one('img').get_attribute_list('alt') # 리스트 형태
+            card_pic = 'https://www.shinhancard.com'+ a
         
-    elif(card_comp =="삼성"):
-        cn = soup.select_one('#contents > div > section:nth-child(1) > div.lists-card > div.card-tx > p')
-        card_name = cn.text # 카드이름
+        # 전월 이용 금액 제외
+        Money = soup.select('ul.marker_hyphen')
+        for i, s in enumerate(Money):
+            _except += f"{i+1}. {s.select_one('li').get_text()}\n"
 
-        #pic = soup.select_one('#contents > div > section:nth-child(1) > div.lists-card > div.card-container > figure > img')['src'] # 카드 사진
-        k = ''
-        lis = soup.select('#contents > div > section:nth-child(1) > article > section > div > section > section > ul')
-        for li in lis: 
-            k+=f'{li.text}\n' 
+    # elif(card_comp =="삼성"):
+    #     cn = soup.select_one('#contents > div > section:nth-child(1) > div.lists-card > div.card-tx > p')
+    #     card_name = cn.text # 카드이름
 
-    elif(card_comp =="현대" and bene):
-        if(bene == 'x' or bene=='m'): # 프리미엄카드 and m, x
-            cn = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
-            card_name = cn.text # 카드이름
+    #     #pic = soup.select_one('#contents > div > section:nth-child(1) > div.lists-card > div.card-container > figure > img')['src'] # 카드 사진
+    #     k = ''
+    #     lis = soup.select('#contents > div > section:nth-child(1) > article > section > div > section > section > ul')
+    #     for li in lis: 
+    #         k+=f'{li.text}\n' 
 
-            k = ''
-            lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
-            for li in lis: # 혜택 정보        
-                k+=f'{li.text}\n'         
-        elif(bene == "zero"):
-            cn = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2')
-            card_name = cn.text # 카드이름
+    # elif(card_comp =="현대" and bene):
+    #     if(bene == 'x' or bene=='m'): # 프리미엄카드 and m, x
+    #         cn = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
+    #         card_name = cn.text # 카드이름
 
-            #card_pic = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.left_area > div.img_wrap > img')['src'] # 카드 이미지
-            #pic = "https://www.hyundaicard.com" + card_pic
+    #         k = ''
+    #         lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
+    #         for li in lis: # 혜택 정보        
+    #             k+=f'{li.text}\n'         
+    #     elif(bene == "zero"):
+    #         cn = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2')
+    #         card_name = cn.text # 카드이름
+
+    #         #card_pic = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.left_area > div.img_wrap > img')['src'] # 카드 이미지
+    #         #pic = "https://www.hyundaicard.com" + card_pic
             
-            k = ''
-            lis = soup.select('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > ul > li')
-            for li in lis: 
-                k+=f'{li.text}\n'
-        elif(bene == "with"):
-            cn = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
-            card_name = cn.text # 카드이름
+    #         k = ''
+    #         lis = soup.select('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > ul > li')
+    #         for li in lis: 
+    #             k+=f'{li.text}\n'
+    #     elif(bene == "with"):
+    #         cn = soup.select_one('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > h2')
+    #         card_name = cn.text # 카드이름
 
 
-            k = ''             
-            lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
-            for li in lis: # 혜택 정보        
-                k+=f'{li.text}\n' 
-        else:
-            cn = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2')
-            card_name = cn.text # 카드이름
+    #         k = ''             
+    #         lis = soup.select('#container > div.content > div > div.detail_top.type_card.type02 > div.right_area > div > div.card_tit_wrap > span > ul > li')
+    #         for li in lis: # 혜택 정보        
+    #             k+=f'{li.text}\n' 
+    #     else:
+    #         cn = soup.select_one('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > h2')
+    #         card_name = cn.text # 카드이름
 
 
-            k = ''             
-            lis = soup.select('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > ul > li')
-            for li in lis: # 혜택 정보        
-                k+=f'{li.text}\n'
-    else:
-        return jsonify({'msg': '다시 입력하여 주십시오'})
-    if(pic):  
+    #         k = ''             
+    #         lis = soup.select('#container > div.content > div > div.detail_top.type_card > div.right_area > div > div.card_tit_wrap > ul > li')
+    #         for li in lis: # 혜택 정보        
+    #             k+=f'{li.text}\n'
+    # else:
+    #     return jsonify({'msg': '다시 입력하여 주십시오'})
+    if(card_pic):  
         doc ={
         'Card_Name' : card_name,
-        'Benefits' : k,
-        'pic_url' : pic,
-        'url': url
+        'Benefits' : benefits,
+        'pic_url' : card_pic,
+        'url': url,
+        '_expext': _except,
     }   
     else:
         doc ={
         'Card_Name' : card_name,
-        'Benefits' : k,
-        'url': url
+        'Benefits' : benefits,
+        'url': url,
+        '_expext': _except,
+
     }
     db.im_card.insert_one(doc)
     return jsonify({'msg': 'finding~'}) # 조건을 db에 저장하는 코드
@@ -194,7 +212,7 @@ def find_inquiries():
 @app.route("/find_inquiries", methods=["GET"]) # find_inquiries_get
 def find_inquiries_get():
     card = list(db.im_card.find({},{'_id':False}))
-    db.im_card.delete_one({})
+    db.im_card.delete_many({})
     return jsonify({'result': card})
 
 ##############################################
