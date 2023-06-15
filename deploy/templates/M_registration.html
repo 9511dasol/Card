@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>카드 등록 - 카드 목록</title>
+
+    <meta property="og:title" content="카드 등록" />
+    <meta property="og:description" content="카드 등록 - 개발자" />
+    <meta property="og:image"
+        content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            font-family: "Noto Serif KR", serif;
+        }
+
+        .mypic {
+            width: 100%;
+            height: 300px;
+
+            background-image: linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)),
+                url("https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800");
+            background-position: center 30%;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 20px auto;
+
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 20px;
+        }
+
+        .mypost>button {
+            margin-top: 15px;
+        }
+
+        .mycards {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+
+        }
+
+        .card img {
+            max-width: 200px;
+            max-height: 200px;
+            height: auto;
+            width: auto;
+            margin: auto;
+            display: block;
+        }
+
+        .mycards>.card {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: wheat;
+            /* color:inherit; 해도 됩니다. */
+        }
+
+        div {
+            text-align: center;
+        }
+
+        div>a {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* section를 목록(list)이라고 보시면 됩니다. */
+        section {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* section > nav를 항목(list-item)이라고 보시면 됩니다. */
+        section>nav {
+            display: inline-block;
+            width: 120px;
+        }
+
+        /* section > nav > a를 항목 텍스트라고 보시면 됩니다. */
+        section>nav>a {
+            /* 이렇게 해야 버튼에 빈 공백이 생기지 않는다. */
+            display: block;
+        }
+
+        section>nav:hover>a {
+            color: red;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            // alert('안녕하세요')
+            show_cards()
+        });
+
+        function find_cards() { // 카드찾기
+            let company = $('#company').val()
+            let pdc = $('#PDC').val() // 포인트 / 할인형
+            if (!company && !pdc) {
+                return alert('카드사 또는 PDC를 입력하여 주세요')
+            }
+            let formData = new FormData();
+            formData.append("company", company);
+            formData.append("pdc", pdc);
+
+            fetch('/findcards', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+            });
+
+            $('#cards-box').empty() // 초기화
+
+            fetch('/findcards').then((res) => res.json()).then((data) => {
+                $('#cards-box').empty()
+                let rows = data['result']
+                rows.forEach((a) => {
+
+                    let company = a['Company'] // 카드사
+                    let cardname = a['Card_Name'] // 카드 이름
+                    let pdc = a['PDC'] // 적립형 or 할인 = 수기
+                    let benefit = a['Benefits'] // 카드 혜택
+                    let innate_number = a['Innate_number'] // 카드 고유 번호 = 수기
+                    let use_ex = a['Use_Ex'] // 카드 사용 예시 = 수기
+                    let rec = a['REC'] // 카드 추천
+                    let Notice = a['Notice'] // 카드 주의사항(주요)
+                    let card_img = a['card_img'] // 카드 이미지
+                    let MF = a['MF'] // 연회비
+                    let using = a['using']
+                    html_text = ``
+                    if (rec) {
+                        html_text = `<div class="col">
+                                        <div class="card h-100">
+                                            <img src="${card_img}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cardname}</h5>
+                                                <p>${MF}</p>
+                                                <strong>⭐개발자 추천 카드⭐</strong>
+                                                <p class="card-text">${benefit}</p>
+                                                <p>${Notice}</p>
+                                                <p>${using}<p>
+                                            </div>
+                                        </div>
+                                    </div>`
+
+                    } else {
+                        html_text = `<div class="col">
+                                        <div class="card h-100">
+                                            <img src="${card_img}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cardname}</h5>
+                                                <p>${MF}</p>                                                
+                                                <p class="card-text">${benefit}</p>
+                                                <p>${Notice}</p>
+                                                <p>${using}<p>
+                                            </div>
+                                        </div>
+                                    </div>`
+                    }
+                    $('#cards-box').append(html_text)
+                });
+            })
+        }
+
+        function modi_card() { // 카드 수정
+            let company = $('#company').val() // 카드 사  2
+            let cardname = $('#cardname').val() // 카드 이름  3
+            let pdc = $('#PDC').val() // 포인트 / 할인형  4
+            let benefit = $('#benefit').val() // 혜택  5 
+            let innate_number = $('#innate_number').val() // 고유번호  6
+            let use_ex = $('#use_ex').val() // 사용 예시  7
+            let REC = $('#REC').val() // 개발자 추천카드  8
+            let Notice = $('#Notice').val() // 주의사항  9 
+            let MF = $('MF').val() // 연회비 Membership Fee  10
+            let pic_url = $('#pic_url').val() // 카드 사진      11
+            let using = $('#using').val() // 전월이용금액   12
+            let url = $('#url').val() // 카드 url  13
+            let main_bene = $('#Main_bene').val() // 메인 혜택 4
+
+            let formData = new FormData();
+            formData.append("company", company);
+            formData.append("cardname", cardname);
+            formData.append("pdc", pdc);
+            formData.append("Benefits", benefit);
+            formData.append("innate_number", innate_number); // 카드 고유 번호
+            formData.append("use_ex", use_ex); // 카드 사용 예시
+            formData.append("REC", REC); // 추천
+            formData.append("Notice", Notice); // 주요 주의사랑
+            formData.append("MF", MF); // 연회비
+            formData.append("pic_url", pic_url); // 카드 사진
+            formData.append("using", using);// 전월 이용 금액
+            formData.append("url", url) // 카드 상세 홈페이지
+            formData.append("main_bene", main_bene); // 카드 메인 혜택
+
+            fetch('/modify', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+
+            });
+        }
+
+        function del_card() { // 카드 삭제
+            let innate_number = $('#innate_number').val() //카드 고유 번호 저장
+
+            let formData = new FormData();
+            formData.append("innate_number", innate_number);
+
+            fetch('/delcard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+            });
+
+        }
+
+        function bring_info() {// 카드 고유번호로 카드 정보 가져오기
+            let innate_number = $('#innate_number').val() // 고유번호
+
+            let formData = new FormData();
+            formData.append("innate_number", innate_number);
+
+            fetch('/bring_info', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                // window.location.reload()
+            });
+
+            fetch('/bring_info').then((res) => res.json()).then((data) => {// 수정 필요
+                //..  
+                let a = data['result'];
+
+                let company = a['Company'];
+                let cardname = a['Card_Name'];
+                let pdc = a['PDC'];
+                let benefit = a['Benefits'];
+                let use_ex = a['use_ex'];
+                let rec = a['REC'];
+                let Notice = a['Notice'];
+                let card_img = a['card_img'];
+                let MF = a['MF'];
+                let pic_url = a['pic_url']; // 추가 사항
+                let using = a['using']; // 전월 이용 금액
+                let main_bene = a['main_bene'];
+                let url = a['url'];
+
+                $('#card_url').val(url)
+                $('#company').val(value = company)
+                $('#cardname').val(cardname)
+                $('#PDC').val(value = pdc)
+                $('#benefit').val(benefit)
+                $('#use_ex').val(use_ex)
+                $('#REC').val(value = rec)
+                $('#Notice').val(Notice)
+                $('MF').val(MF) //membership fee
+                $('#pic_url').val(pic_url)
+                $('#using').val(using)
+                $('#Main_bene').val(value = main_bene)
+                $('#card_url').val(url)
+            })
+
+        }
+
+        function bring_card() { // 카드 정보 로드하기(크롤링)
+            fetch('/find_inquiries').then((res) => res.json()).then((data) => {// 수정 필요
+                // $('#card-list').empty()
+                let rows = data['result'];
+
+                let cardname = rows['Card_Name'];
+                let Benefits = rows['Benefits']; // 리스트
+                let pic_url = rows['pic_url'];
+                let except = rwos['_expext']; // 리스트
+                
+
+                $('#Benefit').val(Benefits); // 혜택란에 넣기
+                $('#card_name').val(cardname);
+                if (pic_url) {
+                    $('#pic_url').val(pic_url);
+                }
+                $('#Notice').val(except)
+            })
+        }
+
+        function find_inquiries() { // url을 이용한 카드 조회
+            // 카드 이름, 혜택까지만
+            let card_url = $('#card_url').val()
+            let hc = $('#hc').val() //현대카드일 떄만
+            let company = $('#company').val()
+            if (!card_url) {
+                return alert("url이 빈칸입니다.")
+            }
+
+            let formData = new FormData();
+            formData.append("card_url", card_url);
+            formData.append("company", company);
+
+            if (company == "현대") {
+                if (!hc) {
+                    return alert("현대카드 종류를 확인해주세요")
+                }
+                formData.append("hc", hc)
+            }
+
+            fetch('/find_inquiries', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]); // -> 불러오는중
+                //window.location.reload()
+
+            });
+
+            bring_card()
+
+
+        }
+
+        function save_card() { // 카드 저장
+            let company = $('#company').val() // 카드 사  2
+            let cardname = $('#cardname').val() // 카드 이름  3
+            let pdc = $('#PDC').val() // 포인트 / 할인형  4
+            let benefit = $('#benefit').val() // 혜택  5 
+            let innate_number = $('#innate_number').val() // 고유번호  6
+            let use_ex = $('#use_ex').val() // 사용 예시  7
+            let REC = $('#REC').val() // 개발자 추천카드  8
+            let Notice = $('#Notice').val() // 주의사항  9 
+            let MF = $('MF').val() // 연회비 Membership Fee  10
+            let pic_url = $('#pic_url').val() // 카드 사진      11
+            let using = $('#using').val() // 전월이용금액   12
+            let url = $('#url').val() // 카드 url  13
+            let main_bene = $('#Main_bene').val() // 메인 혜택 4
+
+            let formData = new FormData();
+            formData.append("company", company);
+            formData.append("cardname", cardname);
+            formData.append("pdc", pdc);
+            formData.append("Benefits", benefit);
+            formData.append("innate_number", innate_number); // 카드 고유 번호
+            formData.append("use_ex", use_ex); // 카드 사용 예시
+            formData.append("REC", REC); // 추천
+            formData.append("Notice", Notice); // 주요 주의사랑
+            formData.append("MF", MF); // 연회비
+            formData.append("pic_url", pic_url); // 카드 사진
+            formData.append("using", using);// 전월 이용 금액
+            formData.append("url", url) // 카드 상세 홈페이지
+            formData.append("main_bene", main_bene); // 카드 메인 혜택
+
+            fetch('/Savecard', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => {
+                //console.log(data)
+                alert(data["msg"]);
+                window.location.reload()
+
+            });
+        }
+
+        function show_cards() { // 모든 카드 보이기
+            fetch('/All_Card').then((res) => res.json()).then((data) => {
+
+                $('#cards-box').empty()
+
+                let rows = data['result']
+
+                rows.forEach((a) => {
+
+                    let company = a['Company']
+                    let cardname = a['Card_Name']
+                    let pdc = a['PDC']
+                    let benefit = a['Benefits']
+                    let innate_number = a['Innate_number']
+                    let use_ex = a['use_ex']
+                    let rec = a['REC']
+                    let Notice = a['Notice']
+                    let MF = a['MF']
+                    let card_img = a['pic_url']
+                    let using = a['using'] // 전월 이용 금액
+                    let url = a['url']
+                    let main_bene = a['main_bene']
+
+                    html_text = ``
+
+                    if (rec) {
+                        html_text = `<div class="col">
+                                        <div class="card h-100">
+                                            <img src="${card_img}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cardname}</h5>
+                                                <p>${MF}</p>
+                                                <strong>⭐개발자 추천 카드⭐</strong>
+                                                <p class="card-text">${benefit}</p>
+                                                <p>${Notice}</p>
+                                                <p>${using}</p>
+                                                <p>주 혜택: ${main_bene}</p>
+                                            </div>
+                                        </div>
+                                    </div>`
+
+                    } else {
+                        html_text = `<div class="col">
+                                        <div class="card h-100">
+                                            <img src="${card_img}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cardname}</h5>
+                                                <p>${MF}</p>                                                
+                                                <p class="card-text">${benefit}</p>
+                                                <p>${Notice}</p>
+                                                <p>${using}</p>
+                                                <p>주 혜택: ${main_bene}</p>
+
+                                            </div>
+                                        </div>
+                                    </div>`
+                    }
+                    $('#cards-box').append(html_text)
+                });
+            })
+        }
+
+        function bring_this(button) {
+            // let innate_number = $(button).parents('#id or .class'). - 부모의 값 가져요기
+            // let innate_number = $(button).siblings('.IN').text(); # 자기 형제
+            // let innate_number = $(button).attr('value') # 속성 값 # 자기 자신 속성값
+            // let innate_number = $(button).text() # 자시 자신 text
+            let innate_number = $(button).attr('value')
+
+            // let val = $(button).$('.btn')
+            
+            // console.log(a)
+            $('#innate_number').val(innate_number);
+            
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="mypic">
+        <div><a href="">Title</a></div>
+        <section>
+            |
+            <nav><a href="M_registration.html"><strong>카드 등록</strong></a></nav>
+            |
+            <nav><a href="M_faq.html">FAQ</a></nav>
+            |
+            <nav><a href="M_contact.html">1:1 문의 메세지</a></nav>
+            |
+            <nav><a href="">추가 요망</a></nav>
+            |
+        </section>
+    </div>
+    <div class="mypost">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">개발자 추천</label>
+            <select class="form-select" id="REC">
+                <option selected></option>
+                <option value="O">O</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect02">카드사</label>
+            <select class="form-select" id="company">
+                <option selected></option>
+                <option value="삼성">삼성</option>
+                <option value="신한">신한</option>
+                <option value="현대">현대</option>
+                <option value="우리">우리</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect02">-- 현대카드 종류 --</label>
+            <select class="form-select" id="hc"> <!-- 현대카드 종류-->
+                <option selected></option>
+                <option value="m">m</option>
+                <option value="x">x</option>
+                <option value="zero">zero</option>
+                <option value="제휴">제휴</option>
+                <option value="나머지">나머지</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">PDC</label>
+            <select class="form-select" id="PDC">
+                <option selected></option>
+                <option value="Point">Point</option>
+                <option value="Discount">Discount</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">메인 혜택</label>
+            <select class="form-select" id="Main_bene">
+                <option selected></option>
+                <option value="기타">기타</option>
+                <option value="제휴">제휴</option>
+                <option value="길음">길음</option>
+                <option value="Air">Air</option>
+                <option value="5">Air</option>
+                <option value="6">Air</option>
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="card_url" placeholder="url" />
+            <label for="floatingInput">Card_URL</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pic_url" placeholder="url" />
+            <label for="floatingInput">Pic_URL</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="card_name" placeholder="url" />
+            <label for="floatingInput">카드 이름</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="month_money" placeholder="using" />
+            <label for="floatingInput">전월 이용 금액</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave Notices here" id="Benefit"
+                style="height: 100px"></textarea>
+            <label for="floatingTextarea2">혜택</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave Notices here" id="Notice"
+                style="height: 100px"></textarea>
+            <label for="floatingTextarea2">주의사항</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave EXs here" id="use_ex" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">사용 예시</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="Membership_fee"
+                id="MF">Master: Visa: 국내: Amex: JCB: UNION: </textarea>
+            <label for="floatingTextarea2">연회비</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="innate_number" placeholder="url" />
+            <label for="floatingInput">카드 고유 번호</label>
+        </div>
+        <button onclick="find_inquiries()" type="button" class="btn btn-dark">
+            URL 조회
+        </button>
+        <button onclick="find_cards()" type="button" class="btn btn-dark">
+            카드 조회
+        </button>
+        <button onclick="save_card()" type="button" class="btn btn-dark">
+            카드 등록
+        </button>
+        <button onclick="modi_card()" type="button" class="btn btn-dark">
+            카드 수정
+        </button>
+        <button onclick="del_card()" type="button" class="btn btn-dark">
+            카드 삭제
+        </button>
+        <button onclick="bring_info()" type="button" class="btn btn-dark">
+            불러오기
+        </button>
+    </div>
+    <div class="mycards">
+        <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card_name">카카오뱅크 신한카드</h5>
+                        <p class="MF">비자: 18000, 국내 15000</p>
+                        <strong class="REC">⭐개발자 추천 카드⭐</strong>
+                        <p class="benefits">10번 결제당 캐시백, 배달, 택시</p>
+                        <p class="caution">전월 이용금액 포함:세금 공과금 등<br>전월 이용금액 미포함: 상품권 등</p>
+                        <button onclick="bring_this(this)" type="button" class="btn btn-dark" value="01001">불러오기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card_name">삼성 ID ON 카드</h5>
+                        <p class="MF">비자: 18000, 국내 15000</p>
+                        <p class="benefits">많이 쓰는 영역, 교통 통신 스트리밍, 간편결제</p>
+                        <p class="caution">전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        <button onclick="bring_this(this)" type="button" class="btn btn-dark" value="03001">불러오기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/09174_img.png"
+                        class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card_name">청춘대로 톡톡카드</h5>
+                        <p class="MF">비자: 18000, 국내 15000</p>
+                        <p class="benefits">스타벅스, 페스트푸드, 간편결제</p>
+                        <p class="caution">전월 이용금액 미포함:세금 공과금 할인이 적용된 이용금액, 상품권 등</p>
+                        <button onclick="bring_this(this)" type="button" class="btn btn-dark" value="04001">불러오기</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

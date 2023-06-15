@@ -11,15 +11,24 @@
 
     <script>
         function aaa() {
-            list =[1, 2, 3, 4, 5, 6, 7]
-            $('.cardname').val(list)
+            list = [1, 2, 3, 4, 5, 6, 7]
+
+            var cardnameInput = $('.cardname');
+
+
+
+            list.forEach(function (item) {
+
+                cardnameInput.val(cardnameInput.val() + item + ' '); // 각 요소를 개행하여 입력칸에 추가
+
+            });
         }
     </script>
 
 </head>
 
 <body>
-    <input type="text" class="cardname" style="height: 100px"  />
+    <input type="text" class="cardname" style="height: 100px" />
     <button onclick="aaa()"> ㅎㅇ</button>
 </body>
 

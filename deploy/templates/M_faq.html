@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>FAQ MAKING</title>
+
+    <meta property="og:title" content="카드 등록" />
+    <meta property="og:description" content="카드 등록 - 개발자" />
+    <meta property="og:image"
+        content="https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            font-family: "Noto Serif KR", serif;
+        }
+
+        .mypic {
+            width: 100%;
+            height: 300px;
+
+            background-image: linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)),
+                url("https://mblogthumb-phinf.pstatic.net/MjAyMTA4MDNfNTkg/MDAxNjI3OTczMDIzNDg4._i6YXj9ap-3C_c0JrciGZSxesNb67DZQxkW0xRXEFiEg.O1gjXgMLIHM-6btALHjDEFkzW8KkxvNABmT5DrsGvb8g.PNG.shine4436/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2021-08-03_%EC%98%A4%ED%9B%84_3.43.41.png?type=w800");
+            background-position: center 30%;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 20px auto;
+
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 20px;
+        }
+
+        .mypost>button {
+            margin-top: 15px;
+        }
+
+        .mycards {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .mycards>.card {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+        body {
+            background-color: white;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        details {
+            background-color: wheat;
+            color: black;
+            font-size: 1.5rem;
+        }
+
+        summary {
+            padding: .5em 1.3rem;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            transition: height 1s ease;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary:after {
+            content: "\002B";
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #aaa;
+            margin-bottom: .5em;
+        }
+
+        details[open] summary:after {
+            content: "\00D7";
+        }
+
+        details[open] div {
+            padding: .5em 1em;
+        }
+
+        a {
+            text-decoration: none;
+            color: wheat;
+            /* color:inherit; 해도 됩니다. */
+        }
+
+        div {
+            text-align: center;
+        }
+
+        div>a {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* section를 목록(list)이라고 보시면 됩니다. */
+        section {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* section > nav를 항목(list-item)이라고 보시면 됩니다. */
+        section>nav {
+            display: inline-block;
+            width: 120px;
+        }
+
+        /* section > nav > a를 항목 텍스트라고 보시면 됩니다. */
+        section>nav>a {
+            /* 이렇게 해야 버튼에 빈 공백이 생기지 않는다. */
+            display: block;
+        }
+
+        section>nav:hover>a {
+            color: red;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            show_faqs()
+        });
+        function save_faqs() { // 등록하기
+            let title = $('#question').val()
+            let detail = $('#detail').val()
+            let q_number = $('#q_number').val()
+
+            let formData = new FormData();
+
+            formData.append('title', title)
+            formData.append('detail', detail)
+            formData.append('q_number', q_number)
+
+            fetch('/save_faqs', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
+                alert(data["msg"]);
+                window.location.reload()
+            });
+        }
+        function update() { // 수정하기
+            let title = $('#question').val()
+            let detail = $('#detail').val()
+            let q_number = $('#q_number').val()
+
+            let formData = new FormData();
+
+            formData.append('title', title)
+            formData.append('detail', detail)
+            formData.append('q_number', q_number)
+
+            fetch('/update_faqs', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
+                alert(data["msg"]);
+                window.location.reload()
+            });
+        }
+        function refresh() { // 빈칸 초기화
+            // window.location.reload()
+            $('#question').val('')
+            $('#detail').val('')
+        }
+        function show_faqs() { // 불러오기
+            fetch('/show_faqs').then((res) => res.json()).then((data) => {
+                $('#Faq').empty()
+
+                let rows = data['result'];
+
+                rows.forEach((a) => {
+                    let title = a['title'];
+                    let detail = a['detail'];
+                    let q_number = a['q_number']
+                    html_text = `<details>
+                                    <summary class="title">${title}</summary>
+                                    <div class="detail">${detail}</div>                                                    
+                                    <h1>질문 번호:</h1>
+                                    <p class="q_number">${q_number}</p>
+                                    <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                                    <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
+                                </details>`
+
+                    $('#Faq').append(html_text)
+
+                });
+            })
+        }
+        function del(button) { //삭제하기
+            let q_number = $(button).siblings('.q_number').text();
+
+            let formData = new FormData();
+
+            formData.append("q_number", q_number);
+            fetch('/del_faq', { method: "POST", body: formData, }).then((res) => res.json()).then((data) => { // 프론트 앤드 수정 요망
+                alert(data["msg"]);
+                window.location.reload()
+            });
+            // console.log(del);
+        }
+        function bring(button) { //수정 가져오기
+            let title = $(button).siblings('.title').text();
+            let detail = $(button).siblings('.detail').text();
+            let q_number = $(button).siblings('.q_number').text();
+
+            $('#question').val(title)
+            $('#detail').val(detail)
+            $('#q_number').val(q_number)
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div class="mypic">
+        <div><a href="">Title</a></div>
+        <section>
+            |
+            <nav><a href="M_registration.html">카드 등록</a></nav>
+            |
+            <nav><a href="M_faq.html"><strong>FAQ</strong></a></nav>
+            |
+            <nav><a href="M_contact.html">1:1 문의 메세지</a></nav>
+            |
+            <nav><a href="">추가 요망</a></nav>
+            |
+        </section>
+    </div>
+    <div class="mypost" id="post-box">
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="question" placeholder="url" />
+            <label for="floatingInput">질문</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="q_number" placeholder="url" />
+            <label for="floatingInput">질문 번호</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="detail"
+                style="height: 200px"></textarea>
+            <label for="floatingTextarea2">답변</label>
+        </div>
+        <div class="mybtns">
+            <button onclick="save_faqs()" type="button" class="btn btn-dark">등록</button>
+            <button onclick="update()" type="button" class="btn btn-dark">수정</button>
+            <button onclick="refresh()" type="button" class="btn btn-dark">초기화</button>
+        </div>
+    </div>
+    <div id="Faq">
+        <div class="container">
+            <details>
+                <summary class="title">How do I create accordion?</summary>
+                <div class="detail">The tags <em>details</em> and <em>summary</em> have you covered.1
+                </div>
+                <h1>질문 번호:</h1>
+                <p class="q_number">0</p>
+                <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary class="title">How do I create accordion?</summary>
+                <div class="detail">The tags <em>details</em> and <em>summary</em> have you covered.2
+                </div>
+                <h1>질문 번호:</h1>
+                <p class="q_number">1</p>
+                <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary class="title">How do I create accordion?</summary>
+                <div class="detail">The tags <em>details</em> and <em>summary</em> have you covered.3
+                </div>
+                <h1>질문 번호:</h1>
+                <p class="q_number">2</p>
+                <button onclick="del(this)" type="button" class="btn btn-dark">삭제</button>
+                <button onclick="bring(this)" type="button" class="btn btn-dark">수정</button>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+        <div class="container">
+            <details>
+                <summary>How do I create accordion?</summary>
+                <div>
+                    The tags <em>details</em> and <em>summary</em> have you covered.
+                </div>
+            </details>
+        </div>
+    </div>
+</body>
+
+</html>

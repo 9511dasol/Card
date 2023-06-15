@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300&display=swap');
+
+:root {
+    --text-color: white;
+    --backround-color: black;
+    --accent-color: wheat;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: wheat;
+    padding: 8px 12px;
+}
+
+.navbar_logo {
+    font-size: 24px;
+    color: black;
+}
+
+.navbar_logo i {
+    color: black;
+}
+
+.navbar_menu {
+    display: flex;
+    list-style: none;
+    margin: 0px auto 10px auto;
+    padding-top: 19px;
+    font-size: 20px;
+}
+
+.navbar_menu li {
+    padding: 8px 12px;
+}
+
+.navbar_menu li:hover {
+    background-color: blanchedalmond;
+    border-radius: 5px;
+}
+
+.navbar_icons {
+    font-size: 30px;
+    list-style: none;
+    color: black;
+    display: flex;
+    padding-left: 0;
+}
+
+.navbar_icons li {
+    padding: 8px 12px;
+}
+
+.navbar_icons li:hover {
+    background-color: blanchedalmond;
+
+}
+
+.navbar_toogleBtn {
+    display: none;
+    position: absolute;
+    right: 32px;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 24px;
+    }
+
+    .navbar_menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .navbar_menu li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar_icons {
+        display: none;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .navbar_toogleBtn {
+        display: block;
+    }
+
+    .navbar_menu.active,
+    .navbar_icons.active {
+        display: flex;
+    }
+}
+
+/* 카드 추천 메인 */
+.card_list {
+    display: grid;
+    grid-template-columns: repeat(2, 380px);
+    /*줄 정하는 것*/
+    grid-template-rows: repeat(5, 190px);
+    grid-gap: 5px;
+    text-align: center;
+    line-height: 175px;
+    width: auto;
+    max-width: 900px;
+    margin: 10px auto 10px auto;
+}
+
+.card_list a {
+    text-decoration: none;
+}
+
+.card_select:hover {
+    background-color: whitesmoke;
+    transition: 0.7s;
+}
+
+.color1 {
+    background-color: antiquewhite;
+}
+
+.color2 {
+    background-color: wheat;
+
+}
+
+.color3 {
+    background-color: whitesmoke;
+
+}
+
+.color4 {
+    background-color: yellow;
+
+}
+
+.color5 {
+    background-color: yellowgreen;
+
+}
+
+.color6 {
+    background-color: teal;
+
+}
+
+.color7 {
+    background-color: tan;
+
+}
+
+.color8 {
+    background-color: tomato;
+
+}
+
+.color9 {
+    background-color: salmon;
+
+}
+
+.color10 {
+    background-color: slateblue;
+
+}
+
+/* 푸터 */
+.col-lg-6,
+.col-sm-12,
+.col-sm-3 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.layout_padding {
+    padding-top: 50px;
+    padding-bottom: 90px;
+    bottom: 0px;
+}
+
+
+
+.container {
+    max-width: 1140px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container ul,
+li,
+ol {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.row {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.footer_section {
+    display: block;
+    width: 100%;
+    float: left;
+    background-color: rgba(0, 0, 0, 0.692);
+    height: auto;
+    padding-bottom: 45px;
+}
+
+.footer_section {
+    display: block;
+    width: 100%;
+    float: left;
+}
+
+.address_text {
+    width: 100%;
+    float: left;
+    font-size: 26px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.simply_text {
+    width: 71%;
+    float: left;
+    font-size: 16px;
+    color: white;
+    margin-left: 0px;
+
+}
+
+.footer_menu_main {
+    width: 100%;
+    float: left;
+}
+
+.footer_left {
+    width: 50%;
+    float: left;
+}
+
+.footer_right {
+    width: 50%;
+    float: left;
+}
+
+.footer_menu {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: white;
+}
+
+.footer_menu ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.footer_menu li {
+    font-size: 16px;
+    color: white;
+}
+
+.footer_menu li a {
+    color: white;
+}
+
+.footer_menu li a:hover {
+    color: wheat;
+}
+
+.newsletter_section {
+    width: 100%;
+    float: left;
+}
+
+.newsletter_left {
+    width: 50%;
+    float: left;
+}
+
+.newsletter_right {
+    width: 32%;
+    float: right;
+}
+
+.social_icon {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: white;
+}
+
+.social_icon ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.social_icon li {
+    font-size: 16px;
+    color: white;
+    float: left;
+    padding-left: 20px;
+}

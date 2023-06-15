@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = 'https://www.shinhancard.com/pconts/html/card/apply/credit/1196302_2207.html'
+URL = 'https://www.shinhancard.com/pconts/html/card/apply/credit/1216792_2207.html'
 # 카드 상세 정보
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 data = requests.get(URL, headers=headers)
@@ -19,8 +19,9 @@ k = []
 #         print(benefit.text) # 카드 혜택 
 
 #카드 이름
-# cn = soup.select_one('.hidden-text')
-# card_name = cn.get_text() # 카드이름
+cn = soup.select_one('.hidden-text')
+card_name = cn.get_text() # 카드이름
+print(card_name)
 h =''
 # 혜택
 bes = soup.select('div.cont')
@@ -39,11 +40,11 @@ print(h)
 #     # a = s.select_one('img').get_attribute_list('alt') # 리스트 형태
 #     print(a)
 
-# 전월 이용 금액 제외
-# src = soup.select('ul.marker_hyphen')
-# for s in src:
-#     k.append(s.select_one('li').get_text())
-
+#카드 혜탹
+src = soup.select('ul.marker_hyphen')
+for s in src:
+    k.append(s.select_one('li').get_text())
+print(k)
 # 연회비
 # src = soup.select('span.ico_brand')
 # for brand in src:
