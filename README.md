@@ -35,7 +35,7 @@
     embedding_size = 248# 일반적으로 100에서 300
     es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=4, restore_best_weights=True)
     model = Sequential()
-# 임베딩층 추가
+    # 임베딩층 추가
     model.add(Embedding(input_dim=num_words,      # 사용하는 단어의 개수
                         output_dim=embedding_size,# 임베딩 차원
                         input_length=max_tokens,  # 리뷰의 길이
@@ -52,11 +52,11 @@
       pad_new = pad_sequences(encoded, maxlen = max_tokens) # 패딩
       score = float(model.predict(pad_new)) # 예측
       if(score > 0.5):
-        print("{:.2f}% 확률로 긍정 댓글입니다.\n".format(score * 100))
+        print("{:.2f}% 확률로 긍정 글입니다.\n".format(score * 100))
       else:
-        print("{:.2f}% 확률로 부정 댓글입니다.\n".format((1 - score) * 100))
-    sentiment_predict('레이디 클레식 카드 좋다~~') # 95.01% 확률로 긍정 댓글입니다.
-    sentiment_predict('더모아 사기네 ?') # 95.01% 확률로 긍정 댓글입니다.
+        print("{:.2f}% 확률로 부정 글입니다.\n".format((1 - score) * 100))
+    sentiment_predict('레이디 클레식 카드 좋다~~') # 95.01% 확률로 긍정 글입니다.
+    sentiment_predict('더모아 사기네 ?') # 95.01% 확률로 긍정 글입니다.
 ### JAVASCRIPT
 
     
