@@ -58,5 +58,8 @@
     sentiment_predict('레이디 클레식 카드 좋다~~') # 95.01% 확률로 긍정 글입니다.
     sentiment_predict('더모아 사기네 ?') # 95.01% 확률로 긍정 글입니다.
 ### JAVASCRIPT
-
+    let innate_number = $(button).parents('#id or .class'). - 부모의 값 가져요기
+    let innate_number = $(button).siblings('.IN').text(); # 자기 형제
+    let innate_number = $(button).attr('value') # 속성 값 # 자기 자신 속성값
+    let innate_number = $(button).text() # 자시 자신 text
     
