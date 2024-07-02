@@ -9,8 +9,8 @@
 
 ### 맴버 구성 🧑‍🤝‍🧑
 - 한다솔: 프론트앤드, 백앤드(자연어처리, 데이터베이스, 서버 담당)
-- 우재현: 중도포기
-- 이강성: 중도포기
+- 우재현: 백앤드(데이터베이스, 서버 담당)
+- 이강성: 백앤드(자연어처리)
 
 ### 개발 환경 ⚙️
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
