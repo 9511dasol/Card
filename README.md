@@ -1,4 +1,4 @@
-# Card Recommendation Home Page
+# Card Recommendation Homepage
 카드 추천 홈페이지
 
 ## 프로젝트 소개 🖥️
