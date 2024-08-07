@@ -1,6 +1,6 @@
 # Card Recommendation Homepage
 카드 추천 홈페이지
-[Demo](https://9511dasol.github.io/Card-for-react/) <- 제작중
+[Demo](https://9511dasol.github.io/Card-for-react/) <- 제작중 ( 메인, 카드 찾기)
 
 github: https://github.com/9511dasol/Card-for-react
 ## 프로젝트 소개 🖥️
