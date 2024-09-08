@@ -22,7 +22,7 @@ github: https://github.com/9511dasol/Card-for-react
 
 2024-08-25: 간단한 버그 픽스
 
-2024-08-~ ing: 반응형 웹페이지 구현중
+2024-09-~ ing: 반응형 웹페이지 구현중 - next.js 구현 예정
 
 2024-09-06: navbar에 한해서 반응형 컨포넌트 구현
 
